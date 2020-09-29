@@ -15,5 +15,9 @@ export default {
 </script>
 
 <style>
-
+.content {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  }
 </style>

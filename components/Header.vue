@@ -8,7 +8,7 @@
       a.header__link(v-for="item of returnLinks" :href="item.link" v-) {{item.text}}
       .header__links--line(:style="{width: widthLinks + 'px'}")
     .header__contacts
-      a.header__contact(href="tel:+78888888888" alt="") 8 888 888 88 88
+      a.header__contact(href="tel:+78888888888" alt="") {{widthS}}
 </template>
 
 <script>
@@ -34,11 +34,11 @@ export default {
       } else this.widthLinks = "0";      
     },
     returnMouse(event) {
-      this.mouseX = event.clientX;
-      this.widthS = this.$refs.links.clientWidth;
+      this.mouseX = event.clientX;      
       this.widthLeft = this.$refs.links.offsetLeft;
+      this.widthS = this.$refs.links.offsetLeft;
       this.widthLinks = this.mouseX - this.widthLeft;
-    }
+    },
   }
 }
 </script>
@@ -52,6 +52,7 @@ export default {
   font-family: "Gilroy", sans-serif;
   text-transform: uppercase;
   color: #262525;
+  flex-grow: 0;
   
   &__title {        
     font-size: 16px;

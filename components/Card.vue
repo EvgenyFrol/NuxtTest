@@ -1,22 +1,38 @@
 <template lang="pug">
-  .card
-    .card__item(v-for="item of returnMenu" :key="item.id" v-)
-      .card__center
-        .card__desc
-          h1.card__title {{item.title}}
-          |
-          p.card__text {{item.text}}
-        .card__image
-          img.card__pic(:src='item.img' :key="item.id" alt="" v-)
+  .card__item
+    .card__textWrap
+      .card__desc
+        h1.card__title {{title}}
+        |
+        p.card__text {{text}}
+          span.card__box ...
+        
+        span.card__number {{index + 1}} / {{quan}}
+      .card__image
+        img.card__pic(:src='img' :alt='alt' v-)
 </template>
 
 <script>
-import Menu from '../components/Menu'
 export default {
   name: "Card",
+  data() {
+    return {
+      show: true,
+      
+    }
+  },
+  props: {
+    title: String,
+    text: String,
+    img: String,
+    alt: String,
+    index: Number,
+    quan: Number,
+    
+  },
   computed:{
     returnMenu() {
-       return this.$store.state.menuLinks
+       return this.$parent.$data.data
     }
   }
 }
@@ -24,30 +40,26 @@ export default {
 
 <style lang="scss">
 
-.card {
-    background: #F0F0F0;
-  
+.card {      
   &__item {
-    display: flex;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
     width: 100%;
-    justify-content: center;
-    align-items: center;
-    
+    background: #F0F0F0;
   }
   
-  &__center {
+  &__textWrap {
     display: flex;
-    justify-self: center;
+    justify-content: center;
     align-items: center;
-    height: 100%;
-
   }
   
   &__desc {
     display: inline-block;
     width:50%;
+    height: 100%;
     padding: 0 172px;
-  
   }
   
   &__title {
@@ -74,16 +86,31 @@ export default {
     text-align: left;
   }
   
-  &__image {
-    width: 50%;
+  &__box {
+    margin-left: 5px;
+    width: 28px;
+    height: 28px;
+    background: #262525;
+    padding: 3px 7px;
+    color: #ffffff;
   }
   
-  &__pic {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    
+  &__number {
+    font-family: Gilroy, sans-serif;;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 20px;   
+    color: #262525;
   }
+  
+  &__image {    
+    width: 50%;
+    height: 100%;
+  }
+  
+  // &__pic {
+  //   float: right;
+  // }
 }
-
 </style>
