@@ -5,7 +5,9 @@
     .header__links(@mouseover="returnWidth(true, $event)" 
                    @mouseout="returnWidth(false)" ref="links"
                    @mousemove="returnMouse")
-      a.header__link(v-for="item of returnLinks" v-) {{item.text}}
+      a.header__link(v-for="item of returnLinks"
+                     ref="linkItem"
+                     @click="$event.target.classList.toggle('header__link--active')" v-) {{item.text}}
       .header__links--line(:style="{width: widthLinks + 'px'}")
     .header__contacts
       a.header__contact(href="tel:+78888888888" alt="") 8 888 888 88 88
@@ -38,6 +40,9 @@ export default {
       this.widthLeft = this.$refs.links.offsetLeft;
       this.widthLinks = this.mouseX - this.widthLeft;
     },
+    returnWidthLink(event) {
+      this.widthItem = this.$refs.linkItem.clientWidth
+    }
   }
 }
 </script>
@@ -81,6 +86,16 @@ export default {
     text-decoration: none;
     font-weight: bold;
     color: #262525;  
+    
+    &--active {
+      margin: 7px 0 0 0;
+      width: 0;
+      height: 4px;
+      background: #D88F5E;
+      border-radius: 0.01px;
+      transition: width 0.2s ease;
+      
+    }
   }
   
   &__contact {
