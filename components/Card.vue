@@ -1,15 +1,14 @@
 <template lang="pug">
   .card__item
-    .card__textWrap
-      .card__desc
-        h1.card__title {{title}}
-        |
-        p.card__text {{text}}
-          span.card__box ...
-        
-        span.card__number {{index + 1}} / {{quan}}
-      .card__image
-        img.card__pic(:src='img' :alt='alt' v-)
+    .card__desc
+      span.card__number {{index + 1}} / {{quan}}
+      h1.card__title {{title}}
+      |
+      p.card__text(ref="text") {{text}}
+      span.card__box(ref="continue" ) ...
+      
+    .card__image
+      img.card__pic(:src='img' :alt='alt' v-)
 </template>
 
 <script>
@@ -18,10 +17,10 @@ export default {
   data() {
     return {
       show: true,
-      
     }
   },
   props: {
+    active: Boolean,
     title: String,
     text: String,
     img: String,
@@ -33,33 +32,40 @@ export default {
   computed:{
     returnMenu() {
        return this.$parent.$data.data
-    }
-  }
+    },
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      if (this.$refs.text.innerHTML.length > 127) {
+        this.$refs.text.innerHTML.substring(0, 127);
+        this.$refs.continue.style.display = "block";
+      }
+    })
+  }  
 }
 </script>
 
 <style lang="scss">
 
-.card {      
-  &__item {
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    width: 100%;
-    background: #F0F0F0;
-  }
+.card {   
+  width: 85%;
   
-  &__textWrap {
+  
+  &__item {
+    background: #F0F0F0;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    align-items: center; 
+    width: 100%;    
+    max-width: 1516px; 
+    height: 100%;
+    max-height: 840px;
   }
   
   &__desc {
     display: inline-block;
-    width:50%;
-    height: 100%;
-    padding: 0 172px;
+    width: 50%;
+    padding: 0 170px;
+    position: relative;
   }
   
   &__title {
@@ -87,30 +93,42 @@ export default {
   }
   
   &__box {
+    display: none;
     margin-left: 5px;
     width: 28px;
     height: 28px;
     background: #262525;
     padding: 3px 7px;
-    color: #ffffff;
+    color: #ffffff; 
+    
+    &:hover {
+      cursor: pointer;
+      background: #363535;
+      color: #ffffffbd; 
+    }
   }
   
-  &__number {
+  .card__number {
     font-family: Gilroy, sans-serif;;
     font-style: normal;
     font-weight: 300;
     font-size: 17px;
     line-height: 20px;   
     color: #262525;
+    position: absolute;
+    left: 172px;
+    bottom: -162px;
   }
-  
+    
   &__image {    
     width: 50%;
     height: 100%;
   }
   
-  // &__pic {
-  //   float: right;
-  // }
+  &__pic {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+  }
 }
 </style>

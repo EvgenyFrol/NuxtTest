@@ -1,6 +1,8 @@
 <template lang="pug">
-  .menu__link(@click="callback(index)" 
-              :class="active?'active':''") {{title}}
+  .menu__link(@click="callback(index)"
+              @mousemove="widthTitle"
+              :class="active?'active':''"
+              ref="linksWidth") {{title}}
 </template>
 
 <script>
@@ -12,9 +14,19 @@ export default {
     callback: Function,
     index: Number,
   },
+  data () {
+    return {
+      widthLinkTitle: 0,
+    }
+  },
   computed:{
     returnMenu() {
       return this.$parent.$data.data
+    }
+  },
+  methods: {
+    widthTitle(event) {
+      this.widthLinkTitle = this.$refs.linksWidth.clientWidth;
     }
   }
 }
@@ -22,6 +34,8 @@ export default {
 
 <style lang="scss">
   .menu__link {
+    height: auto;
+    padding: 2px 4px;
     margin-top: 32px;
     font-family: Roboto, sans-serif;
     font-style: normal;
@@ -30,5 +44,28 @@ export default {
     line-height: 15px;
     letter-spacing: 0.567739px;
     text-decoration: none;
-  }   
+    transition: font-weight 0.2s ease;
+    transition: background 0.2s ease;
+    flex: none;
+    order: 2;
+    align-self: flex-start;
+    flex-grow: 0;    
+    
+    &:hover {
+      background: linear-gradient(to top, #EBD8CC 50%, #FFF 50%);   
+  }
+}   
+  
+.active {
+  background:linear-gradient(to top, #EBD8CC 50%, #FFF 50%);
+  font-family: Roboto;
+  font-style: normal;    
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.567739px;      
+  text-transform: uppercase;
+  transition: font-weight 0.2s ease;
+  transition: background 0.2s ease
+}
 </style>

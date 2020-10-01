@@ -15,6 +15,7 @@
              :text="item.text"
              :img="item.img"
              :alt="item.alt"
+             :callback="isActive"
              :quan="data.length"
              :index="i"
              :key="i")
@@ -39,22 +40,32 @@ export default {
 
 <style lang="scss">
 .container {
-  display: flex;
   height: 100%;
+  max-height: 840px;
   box-sizing: border-box;
-  flex-grow:1;
+  display: flex;
   }
 
 .menu {
-  width: 22%;
+  width: 15%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin: 0 auto 0 0;
 
   &:hover {
   cursor: pointer;
-}
+  }
 }
 
+.card {
+  width: 78%;  
+}
 
+.v-leave .fade-enter-active, .fade-enter-to, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
+}
 </style>

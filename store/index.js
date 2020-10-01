@@ -7,10 +7,10 @@ const store = () =>
   new Vuex.Store({
     state: {
       headerLinks: [
-        {link: '#', text: 'О комплексе'},
-        {link: '#', text: 'Особенности'},
-        {link: '#', text: 'Пентхаусы'},
-        {link: '#', text: 'Выбрать квартиру'},
+        {link: '', text: 'О комплексе'},
+        {link: '', text: 'Особенности'},
+        {link: '', text: 'Пентхаусы'},
+        {link: '', text: 'Выбрать квартиру'},
       ],
       menuLinks: [
         {
