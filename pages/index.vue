@@ -54,7 +54,8 @@ export default {
   transform: rotate(-45deg);
 }
 
-.line1 {
+.line1,
+.line3 {
   width: 20px;
   height: 2px;
   background: #fff;
@@ -64,12 +65,6 @@ export default {
   width: 42px;
   height: 2px;
   margin: 6px 0;
-  background: #fff;
-}
-
-.line3 {
-  width: 20px;
-  height: 2px;
   background: #fff;
 }
 </style>

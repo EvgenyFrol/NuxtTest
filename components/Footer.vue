@@ -11,7 +11,7 @@ export default {
 
 <style lang="scss">
   .footer {
-    padding: 23px 0 22px 0;
+    padding: 20px 0;
     flex-grow: 0;
     
     &__text {

@@ -47,7 +47,7 @@ export default {
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 20px 62px 22px 62px;
+  padding: 20px 62px;
   font-family: "Gilroy", sans-serif;
   text-transform: uppercase;
   color: #262525;
@@ -92,5 +92,4 @@ export default {
     color: #262525; 
   }
 }
-
 </style>

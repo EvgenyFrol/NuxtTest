@@ -47,7 +47,7 @@ export default {
   }
 
 .menu {
-  width: 15%;
+  width: 14%;
   display: flex;
   flex-direction: column;
   justify-content: center;

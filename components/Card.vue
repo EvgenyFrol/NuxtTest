@@ -5,8 +5,7 @@
       h1.card__title {{title}}
       |
       p.card__text(ref="text") {{text}}
-      span.card__box(ref="continue" ) ...
-      
+      span.card__box(ref="continue" ) ...      
     .card__image
       img.card__pic(:src='img' :alt='alt' v-)
 </template>
@@ -37,7 +36,6 @@ export default {
   mounted: function () {
     this.$nextTick(function () {
       if (this.$refs.text.innerHTML.length > 127) {
-        this.$refs.text.innerHTML.substring(0, 127);
         this.$refs.continue.style.display = "block";
       }
     })
@@ -48,8 +46,7 @@ export default {
 <style lang="scss">
 
 .card {   
-  width: 85%;
-  
+  width: 85%;  
   
   &__item {
     background: #F0F0F0;
