@@ -20,7 +20,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .content {
   height: 100vh;
   display: flex;
@@ -44,6 +44,21 @@ export default {
   top: 25px;
   right: 25px;
   padding: 25px;
+  
+  &:hover {
+  
+    .line1,
+    .line3 {
+      width: 25px;
+      height: 3px;
+    }
+    
+    .line2 {
+      width: 45px;
+      height: 3px;
+      margin: 5px 0;
+    }  
+  }
 }
 
 .burger {
@@ -52,6 +67,14 @@ export default {
   justify-content: center;
   align-items: center;
   transform: rotate(-45deg);
+}
+
+.line1,
+.line2,
+.line3 {
+  transition: width 0.2s ease,
+              height 0.2s ease,
+              margin 0.2s ease;              
 }
 
 .line1,

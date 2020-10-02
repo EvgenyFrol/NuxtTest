@@ -2,13 +2,15 @@
   section.header
     .header__headline
       p.header__title Первомайская
-    .header__links(@mouseover="returnWidth(true, $event)" 
-                   @mouseout="returnWidth(false)" ref="links"
-                   @mousemove="returnMouse")
-      a.header__link(v-for="item of returnLinks"
-                     ref="linkItem"
-                     @click="$event.target.classList.toggle('header__link--active')" v-) {{item.text}}
-      .header__links--line(:style="{width: widthLinks + 'px'}")
+    .header__links(ref="links")
+      a.header__link(v-for="(item, i) of returnLinks"
+                    ref="linkItem"
+                    @mouseover="returnWidth(i, $event)"
+                    :class="isActive==i?'isActive':''"
+                    :index="i"
+                    @click="returnWidthLink(i, $event)"
+                    v-) {{item.text}}
+      .header__links--line(:style="{width: widthLinks + 'px', marginLeft: marginFromParent + 'px'}" ref="widthLine")
     .header__contacts
       a.header__contact(href="tel:+78888888888" alt="") 8 888 888 88 88
 </template>
@@ -19,9 +21,15 @@ export default {
   data () {
     return {
       widthLinks: 0,
+      widthLink: 0,
       mouseX: 0,
       widthS: 0,
       widthLeft: 0,
+      mouseItem: 0,
+      mouseItems: 0,
+      marginFromParent: 0,
+      widthForActiveItem: 0,
+      isActive: 0,
     }
   },
   computed:{
@@ -32,17 +40,39 @@ export default {
   methods:{
     returnWidth(mouseInside, event) {
       if (mouseInside) {
-        this.widthLinks = "100";        
+        this.widthLinks = "100";  
+        this.returnMouse(event)
       } else this.widthLinks = "0";      
     },
-    returnMouse(event) {
-      this.mouseX = event.clientX;      
-      this.widthLeft = this.$refs.links.offsetLeft;
-      this.widthLinks = this.mouseX - this.widthLeft;
+    returnMouse(event) {          
+    
+      this.widthLinks = event.target.offsetLeft + event.target.offsetWidth - this.marginFromParent
+      
     },
-    returnWidthLink(event) {
-      this.widthItem = this.$refs.linkItem.clientWidth
-    }
+    returnWidthLink(i, event) {    
+      
+      this.mouseItems = event.clientX - event.target.offsetLeft;       
+      this.widthLinks = event.target.offsetWidth - this.mouseItem;
+      this.marginFromParent = event.target.offsetLeft;
+      
+      if (this.$refs.linkItem[i].getAttribute('index') > 0) {
+        console.log(event.target.offsetWidth);    
+      };
+     
+      console.log(this.$refs.linkItem[i].offsetLeft) // возвращает расстояние
+      console.log(event.target.offsetWidth) // возвращает ширину
+      
+      if (this.$refs.linkItem[i].offsetLeft > 0) {
+      
+      }
+      
+    },
+    isActiveItem(i) {
+      this.isActive = i;
+    },
+  },
+  mounted () {
+    this.widthLinks = document.querySelector('.isActive').offsetWidth;
   }
 }
 </script>
@@ -67,6 +97,8 @@ export default {
   &__links {
     width: auto;
     height: 10px;
+    position: relative;
+    
                
     &--line {
       margin: 7px 0 0 0;
@@ -75,6 +107,7 @@ export default {
       background: #D88F5E;
       border-radius: 0.01px;
       transition: width 0.2s ease;
+      animation-direction: normal;
     }   
   }
     
@@ -93,8 +126,7 @@ export default {
       height: 4px;
       background: #D88F5E;
       border-radius: 0.01px;
-      transition: width 0.2s ease;
-      
+      transition: width 0.1s ease;
     }
   }
   
