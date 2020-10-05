@@ -44,7 +44,11 @@ export default {
   max-height: 840px;
   box-sizing: border-box;
   display: flex;
+  
+  @media (max-width: 768px) {
+    display: block;
   }
+}
 
 .menu {
   width: 14%;
@@ -54,12 +58,22 @@ export default {
   margin: 0 auto 0 0;
 
   &:hover {
-  cursor: pointer;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 20px auto;
+    flex-flow: wrap;
   }
 }
 
 .card {
-  width: 78%;  
+  width: 84%; 
+  
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 }
 
 .v-leave .fade-enter-active, .fade-enter-to, .fade-leave-active {

@@ -10,7 +10,7 @@
                     :index="i"
                     @click="returnWidthLink(i, $event)"
                     v-) {{item.text}}
-      .header__links--line(:style="{width: widthLinks + 'px', marginLeft: marginFromParent + 'px'}" ref="widthLine")
+      .header__links--line(:style="{width: widthLinks + 'px', left: marginFromParent + 'px'}" ref="widthLine")
     .header__contacts
       a.header__contact(href="tel:+78888888888" alt="") 8 888 888 88 88
 </template>
@@ -23,13 +23,12 @@ export default {
       widthLinks: 0,
       widthLink: 0,
       mouseX: 0,
-      widthS: 0,
-      widthLeft: 0,
       mouseItem: 0,
-      mouseItems: 0,
       marginFromParent: 0,
       widthForActiveItem: 0,
       isActive: 0,
+      directionLeft: true,
+      directionRight: false,
     }
   },
   computed:{
@@ -38,37 +37,42 @@ export default {
     }
   },
   methods:{
-    returnWidth(mouseInside, event) {
-      if (mouseInside) {
-        this.widthLinks = "100";  
-        this.returnMouse(event)
-      } else this.widthLinks = "0";      
-    },
-    returnMouse(event) {          
-    
-      this.widthLinks = event.target.offsetLeft + event.target.offsetWidth - this.marginFromParent
+    returnWidth(i, event) {
       
-    },
-    returnWidthLink(i, event) {    
-      
-      this.mouseItems = event.clientX - event.target.offsetLeft;       
-      this.widthLinks = event.target.offsetWidth - this.mouseItem;
-      this.marginFromParent = event.target.offsetLeft;
-      
-      if (this.$refs.linkItem[i].getAttribute('index') > 0) {
-        console.log(event.target.offsetWidth);    
-      };
-     
-      console.log(this.$refs.linkItem[i].offsetLeft) // возвращает расстояние
-      console.log(event.target.offsetWidth) // возвращает ширину
-      
-      if (this.$refs.linkItem[i].offsetLeft > 0) {
-      
+      if (this.isActive > i) {
+        this.$refs.widthLine.style.left = "auto";
+        this.$refs.widthLine.style.right = 0;
+        
+        this.widthLinks = this.$refs.links.offsetWidth - event.target.offsetLeft
+        
+        this.$refs.widthLine.style.right = 0;
+        console.log(this.widthLinks)
+      } else {
+        this.returnMouse(event);
+        console.log('right')
       }
       
+      // console.log(i)
+      // console.log(this.isActive)
+      
+    },    
+    returnMouse(event) {       
+      this.widthLinks = event.target.offsetLeft + event.target.offsetWidth - this.marginFromParent;
+      
+    },    
+    returnWidthLink(i, event) {    
+      this.marginFromParent = event.target.offsetLeft;     
+      this.widthLinks = event.target.offsetWidth - this.mouseItem;
+      
+      this.isActiveItem(i);
+      
+      // console.log(this.$refs.linkItem[i].offsetLeft) // возвращает расстояние
+      // console.log(event.target.offsetWidth) // возвращает ширину
+  
     },
+    
     isActiveItem(i) {
-      this.isActive = i;
+      this.isActive = i;      
     },
   },
   mounted () {
@@ -101,13 +105,15 @@ export default {
     
                
     &--line {
-      margin: 7px 0 0 0;
+      position: absolute;
+      top: 25px;
+      left: 0;
       width: 0;
+      max-width: 600px;
       height: 4px;
       background: #D88F5E;
       border-radius: 0.01px;
       transition: width 0.2s ease;
-      animation-direction: normal;
     }   
   }
     
@@ -119,15 +125,6 @@ export default {
     text-decoration: none;
     font-weight: bold;
     color: #262525;  
-    
-    &--active {
-      margin: 7px 0 0 0;
-      width: 0;
-      height: 4px;
-      background: #D88F5E;
-      border-radius: 0.01px;
-      transition: width 0.1s ease;
-    }
   }
   
   &__contact {
@@ -137,6 +134,67 @@ export default {
     letter-spacing: 0.290629px;
     text-decoration: none;
     color: #262525; 
+  }
+  
+  @media (max-width: 1440px) {
+  
+     &__title,
+     &__contact {        
+      font-size: 14px;
+      line-height: 18px;
+    }
+  
+    &__link {
+      padding: 0 18px;
+      font-size: 12px;
+      line-height: 14px;
+    }  
+  }
+  
+  @media (max-width: 1024px) {
+  
+    &__title,
+    &__contact {        
+      font-size: 12px;
+      line-height: 16px;
+    }
+  
+    &__link {
+      padding: 0 14px;
+      font-size: 10px;
+      line-height: 12px;
+    }  
+  }
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    
+    &__title {
+      margin-bottom: 10px;
+    }
+    
+    &__links {
+      display: contents;
+      
+      &--line {
+        display: none;        
+      }   
+    } 
+    
+    &__link {
+      padding: 2px 0;      
+    } 
+    
+    &__contacts {
+      margin-top: 10px;
+    }
+    
+    .isActive {
+      flex: none;
+      align-self: center;   
+      background: linear-gradient(to top, #D88F5E 50%, #FFF 50%); 
+    }
   }
 }
 </style>

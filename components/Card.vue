@@ -5,7 +5,7 @@
       h1.card__title {{title}}
       |
       p.card__text(ref="text") {{text}}
-      span.card__box(ref="continue" ) ...      
+        span.card__box(ref="continue" ) ...      
     .card__image
       img.card__pic(:src='img' :alt='alt' v-)
 </template>
@@ -34,10 +34,11 @@ export default {
     },
   },
   mounted: function () {
-    this.$nextTick(function () {
-      if (this.$refs.text.innerHTML.length > 127) {
-        this.$refs.continue.style.display = "block";
-      }
+    this.$nextTick(function () {  
+      // if (this.$refs.text.innerHTML.length > 150) {
+      //   this.$refs.continue.style.display = "inline-block";
+      // }
+      this.$refs.text.getClientRects();
     })
   }  
 }
@@ -45,8 +46,7 @@ export default {
 
 <style lang="scss">
 
-.card {   
-  width: 85%;  
+.card {
   
   &__item {
     background: #F0F0F0;
@@ -61,7 +61,7 @@ export default {
   &__desc {
     display: inline-block;
     width: 50%;
-    padding: 0 170px;
+    padding: 0 10%;
     position: relative;
   }
   
@@ -91,11 +91,11 @@ export default {
   
   &__box {
     display: none;
-    margin-left: 5px;
+    margin-left: 8px;
     width: 28px;
     height: 28px;
     background: #262525;
-    padding: 3px 7px;
+    padding: 0 7px;
     color: #ffffff; 
     
     &:hover {
@@ -105,7 +105,7 @@ export default {
     }
   }
   
-  .card__number {
+  &__number {
     font-family: Gilroy, sans-serif;;
     font-style: normal;
     font-weight: 300;
@@ -113,7 +113,7 @@ export default {
     line-height: 20px;   
     color: #262525;
     position: absolute;
-    left: 172px;
+    left: 20%;
     bottom: -162px;
   }
     
@@ -126,6 +126,79 @@ export default {
     height: 100%;
     width: 100%;
     object-fit: cover;
+  }
+  
+  @media (max-width: 1440px) {
+  
+    &__title {
+      font-size: 33px;
+      line-height: 38px;
+    }
+    
+    &__text {
+      font-size: 12px;
+      line-height: 20px;
+  }
+  
+    &__number {
+      bottom: -119px;
+    }
+  }
+  
+  @media (max-width:1024px) {
+  
+    &__title {
+      font-size: 22px;
+      line-height: 25px;
+      padding: 0 0 20px 0;
+    }
+    
+    &__text {
+      font-size: 12px;
+      line-height: 20px;
+    }
+  
+    &__number {
+      font-size: 15px;
+      line-height: 17px; 
+      bottom: -119px;
+      
+    }
+  }
+  
+  @media (max-width: 768px) {
+  
+    &__item {
+      display: block;
+    }
+    
+    &__desc {
+      width: 100%;
+      padding: 30px 10%;
+    }
+    
+    &__image {    
+      width: 100%;
+    }
+    
+    &__number {
+      top: 20px;
+      right: 20px;
+      left: auto;
+    }    
+    
+    &__box {
+      width: 20px;
+      height: 20px;
+      padding: 0 5px;
+    }
+  }
+  
+  @media (max-width: 375px) {
+    &__number {
+      font-size: 12px;
+      line-height: 14px;       
+    }
   }
 }
 </style>

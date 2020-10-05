@@ -24,5 +24,9 @@ export default {
       text-transform: uppercase;
       color: #505050;
     }
+    
+    @media (max-width: 768px) {
+      padding: 30px 0;
+    }
   }
 </style>
