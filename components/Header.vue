@@ -10,7 +10,7 @@
                     :index="i"
                     @click="returnWidthLink(i, $event)"
                     v-) {{item.text}}
-      .header__links--line(:style="{width: widthLinks + 'px', left: marginFromParent + 'px'}" ref="widthLine")
+      .header__links--line(:style="{width: widthLinks + 'px'}" ref="widthLine")
     .header__contacts
       a.header__contact(href="tel:+78888888888" alt="") 8 888 888 88 88
 </template>
@@ -27,8 +27,7 @@ export default {
       marginFromParent: 0,
       widthForActiveItem: 0,
       isActive: 0,
-      directionLeft: true,
-      directionRight: false,
+      rightDistance: 0,
     }
   },
   computed:{
@@ -37,40 +36,43 @@ export default {
     }
   },
   methods:{
-    returnWidth(i, event) {
+    returnWidth(i, event) {        
       
-      if (this.isActive > i) {
-        this.$refs.widthLine.style.left = "auto";
-        this.$refs.widthLine.style.right = 0;
-        
-        this.widthLinks = this.$refs.links.offsetWidth - event.target.offsetLeft
-        
-        this.$refs.widthLine.style.right = 0;
-        console.log(this.widthLinks)
-      } else {
+      if (this.isActive >= i) {
+      
+        this.$refs.widthLine.style.left = "auto";        
+        this.widthLinks = this.$refs.links.offsetWidth - event.target.offsetLeft - this.rightDistance;           
+        this.$refs.widthLine.style.right = this.rightDistance + 'px';            
+                
+      } else {  
+      
         this.returnMouse(event);
-        console.log('right')
-      }
-      
-      // console.log(i)
-      // console.log(this.isActive)
-      
+      }     
     },    
     returnMouse(event) {       
-      this.widthLinks = event.target.offsetLeft + event.target.offsetWidth - this.marginFromParent;
-      
+        this.$refs.widthLine.style.right = "auto";
+        this.$refs.widthLine.style.left = this.marginFromParent + 'px';
+        
+        this.widthLinks = event.target.offsetLeft + event.target.offsetWidth - this.marginFromParent;
+        this.$refs.widthLine.style.left = event.target.offsetLeft + event.target.offsetWidth;
     },    
     returnWidthLink(i, event) {    
-      this.marginFromParent = event.target.offsetLeft;     
-      this.widthLinks = event.target.offsetWidth - this.mouseItem;
+
+      this.marginFromParent = event.target.offsetLeft;        
+      this.rightDistance = event.target.offsetParent.offsetWidth - event.target.offsetLeft - event.target.offsetWidth;
       
+      if (this.isActive > i) {    
+        this.$refs.widthLine.style.left = "auto";
+        this.$refs.widthLine.style.right = this.rightDistance + 'px';
+      } else {
+        this.$refs.widthLine.style.right = "auto";
+        this.$refs.widthLine.style.left = this.marginFromParent + 'px';
+      }    
+      
+      this.widthLinks = event.target.offsetWidth;
+                    
       this.isActiveItem(i);
-      
-      // console.log(this.$refs.linkItem[i].offsetLeft) // возвращает расстояние
-      // console.log(event.target.offsetWidth) // возвращает ширину
-  
-    },
-    
+    },    
     isActiveItem(i) {
       this.isActive = i;      
     },
@@ -113,7 +115,7 @@ export default {
       height: 4px;
       background: #D88F5E;
       border-radius: 0.01px;
-      transition: width 0.2s ease;
+      transition: width 0.2s ease, left 0.2s, right 0.2s;    
     }   
   }
     

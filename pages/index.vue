@@ -22,7 +22,6 @@ export default {
 
 <style lang="scss">
 .content {
-  height: 100vh;
   display: flex;
   flex-direction: column;
 }

@@ -34,7 +34,7 @@ export default {
     isActive(i) {
       this.isActiveNumber = i;     
     },
-  }
+  },
 }
 </script>
 
@@ -77,9 +77,9 @@ export default {
 }
 
 .v-leave .fade-enter-active, .fade-enter-to, .fade-leave-active {
-  transition: opacity .3s;
+  transition: opacity 0.2s ease;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+.fade-enter, .fade-leave-to  {
   opacity: 0;
 }
 </style>

@@ -35,9 +35,9 @@ export default {
   },
   mounted: function () {
     this.$nextTick(function () {  
-      // if (this.$refs.text.innerHTML.length > 150) {
-      //   this.$refs.continue.style.display = "inline-block";
-      // }
+      if (this.$refs.text.innerHTML.length > 150) {
+        this.$refs.continue.style.display = "inline-block";
+      }
       this.$refs.text.getClientRects();
     })
   }  
