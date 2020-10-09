@@ -8,17 +8,16 @@
           :key="i",
           :index="i")
     .card
-      transition(name="fade")
-        Card(v-for="(item, i) in data"
-             v-if="isActiveNumber==i"
-             :title="item.title"
-             :text="item.text"
-             :img="item.img"
-             :alt="item.alt"
-             :callback="isActive"
-             :quan="data.length"
-             :index="i"
-             :key="i")
+      Card(v-for="(item, i) in data"
+           :active="isActiveNumber==i" 
+           :title="item.title"
+           :text="item.text"
+           :img="item.img"
+           :alt="item.alt"
+           :callback="isActive"
+           :quan="data.length"
+           :index="i"
+           :key="i")
 </template>
 
 <script>
@@ -40,8 +39,6 @@ export default {
 
 <style lang="scss">
 .container {
-  height: 100%;
-  max-height: 840px;
   box-sizing: border-box;
   display: flex;
   
@@ -76,10 +73,10 @@ export default {
   }
 }
 
-.v-leave .fade-enter-active, .fade-enter-to, .fade-leave-active {
-  transition: opacity 0.2s ease;
-}
-.fade-enter, .fade-leave-to  {
-  opacity: 0;
-}
+// .fade-enter-active, .fade-leave-active {
+//   transition: opacity .5s;
+// }
+// .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+//   opacity: 0;
+// }
 </style>

@@ -47,9 +47,11 @@ export default {
       } else {  
       
         this.returnMouse(event);
+        
       }     
     },    
-    returnMouse(event) {       
+    returnMouse(event) {    
+    
         this.$refs.widthLine.style.right = "auto";
         this.$refs.widthLine.style.left = this.marginFromParent + 'px';
         
@@ -62,18 +64,24 @@ export default {
       this.rightDistance = event.target.offsetParent.offsetWidth - event.target.offsetLeft - event.target.offsetWidth;
       
       if (this.isActive > i) {    
+      
         this.$refs.widthLine.style.left = "auto";
         this.$refs.widthLine.style.right = this.rightDistance + 'px';
+        
       } else {
+      
         this.$refs.widthLine.style.right = "auto";
         this.$refs.widthLine.style.left = this.marginFromParent + 'px';
+        
       }    
       
       this.widthLinks = event.target.offsetWidth;
                     
       this.isActiveItem(i);
+      
     },    
     isActiveItem(i) {
+    
       this.isActive = i;      
     },
   },
@@ -147,7 +155,7 @@ export default {
     }
   
     &__link {
-      padding: 0 18px;
+      padding: 0 16px;
       font-size: 12px;
       line-height: 14px;
     }  
@@ -162,9 +170,9 @@ export default {
     }
   
     &__link {
-      padding: 0 14px;
-      font-size: 10px;
-      line-height: 12px;
+      padding: 0 10px;
+      font-size: 8px;
+      line-height: 10px;
     }  
   }
   

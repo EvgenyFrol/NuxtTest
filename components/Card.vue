@@ -1,5 +1,5 @@
 <template lang="pug">
-  .card__item
+  .card__item(:class="active?'card__active':''")
     .card__desc
       span.card__number {{index + 1}} / {{quan}}
       h1.card__title {{title}}
@@ -15,7 +15,7 @@ export default {
   name: "Card",
   data() {
     return {
-      show: true,
+      isActiveNumber: 0, 
     }
   },
   props: {
@@ -24,21 +24,41 @@ export default {
     text: String,
     img: String,
     alt: String,
+    callback: Function,
     index: Number,
     quan: Number,
-    
   },
   computed:{
     returnMenu() {
        return this.$parent.$data.data
     },
   },
+  methods: {
+    isActive(i) {
+      this.isActiveNumber = i;     
+    },
+  },
   mounted: function () {
     this.$nextTick(function () {  
+    
+      let f = 18; //font-size
+      let w = Math.floor(this.$refs.text.getBoundingClientRect().width); //ширина блока
+      let l = this.$refs.text.innerHTML.length; //длина текста
+      
+      let r = Math.ceil(w / f);
+      let s = Math.ceil(w / r);
+      
+      let str = r + s;
+                 
+      console.log(this.$refs.text.innerHTML.split('\n').length);
+      
+      // console.log('ширина блока с текстом = ' + w);
+      // console.log('длина текста = ' + l + ' символа');
+      // console.log(document.querySelector('.card__text').style.fontSize = f)
+      
       if (this.$refs.text.innerHTML.length > 150) {
         this.$refs.continue.style.display = "inline-block";
       }
-      this.$refs.text.getClientRects();
     })
   }  
 }
@@ -47,8 +67,13 @@ export default {
 <style lang="scss">
 
 .card {
-  
+
   &__item {
+    display: none;
+    transition: display 0.3s ease
+  }
+  
+  &__active {
     background: #F0F0F0;
     display: flex;
     align-items: center; 
@@ -61,17 +86,16 @@ export default {
   &__desc {
     display: inline-block;
     width: 50%;
-    padding: 0 10%;
+    padding: 0 11%;
     position: relative;
   }
   
   &__title {
-    font-family: Gilroy, sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 44px;
+    font-size: 3em;
     line-height: 53px;
-    letter-spacing: -0.0255199px;
+    letter-spacing: 0.3552px;
     text-transform: uppercase;
     color: #262525;
     text-align: left;
@@ -87,6 +111,7 @@ export default {
     letter-spacing: -0.0220791px;
     color: #262525;
     text-align: left;
+    white-space: normal;
   }
   
   &__box {
@@ -141,7 +166,9 @@ export default {
   }
   
     &__number {
-      bottom: -119px;
+      bottom: -119px;   
+      font-size: 15px;
+      line-height: 17px;   
     }
   }
   
@@ -159,8 +186,8 @@ export default {
     }
   
     &__number {
-      font-size: 15px;
-      line-height: 17px; 
+      font-size: 13px;
+      line-height: 15px; 
       bottom: -119px;
       
     }
