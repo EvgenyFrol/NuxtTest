@@ -1,13 +1,13 @@
 <template lang="pug">
-  .card__item(:class="active?'card__active':''")
-    .card__desc
-      span.card__number {{index + 1}} / {{quan}}
+  .card__item(:class="active?'card__item--active':''")
+    .card__desc(:class="{'slideUp': animateTop, 'slideDown': !animateTop}")
       h1.card__title {{title}}
       |
-      p.card__text(ref="text") {{text}}
-        span.card__box(ref="continue" ) ...      
+      p.card__text(ref="actText") {{text}}
+        span.card__box(ref="continue" ) ...  
+    span.card__number {{index + 1}} / {{quan}}
     .card__image
-      img.card__pic(:src='img' :alt='alt' v-)
+      img.card__pic(:src='img' :class="{'slideUp': !animateTop, 'slideDown': animateTop}" :alt='alt')
 </template>
 
 <script>
@@ -27,67 +27,42 @@ export default {
     callback: Function,
     index: Number,
     quan: Number,
+    animateTop: Boolean,
   },
   computed:{
     returnMenu() {
-       return this.$parent.$data.data
+      return this.$parent.$data.data
     },
   },
-  methods: {
-    isActive(i) {
-      this.isActiveNumber = i;     
-    },
-  },
-  mounted: function () {
-    this.$nextTick(function () {  
-    
-      let f = 18; //font-size
-      let w = Math.floor(this.$refs.text.getBoundingClientRect().width); //ширина блока
-      let l = this.$refs.text.innerHTML.length; //длина текста
-      
-      let r = Math.ceil(w / f);
-      let s = Math.ceil(w / r);
-      
-      let str = r + s;
-                 
-      console.log(this.$refs.text.innerHTML.split('\n').length);
-      
-      // console.log('ширина блока с текстом = ' + w);
-      // console.log('длина текста = ' + l + ' символа');
-      // console.log(document.querySelector('.card__text').style.fontSize = f)
-      
-      if (this.$refs.text.innerHTML.length > 150) {
-        this.$refs.continue.style.display = "inline-block";
-      }
-    })
-  }  
 }
 </script>
 
 <style lang="scss">
 
 .card {
+  overflow: hidden;
 
   &__item {
     display: none;
-    transition: display 0.3s ease
+    
+    &--active { 
+      background: #F0F0F0;
+      display: flex;
+      align-items: center; 
+      width: 100%;    
+      max-width: 1516px; 
+      height: 100%;
+      max-height: 840px;
+      position: relative;
+    }
   }
-  
-  &__active {
-    background: #F0F0F0;
-    display: flex;
-    align-items: center; 
-    width: 100%;    
-    max-width: 1516px; 
-    height: 100%;
-    max-height: 840px;
-  }
-  
+    
   &__desc {
     display: inline-block;
     width: 50%;
     padding: 0 11%;
     position: relative;
+    
   }
   
   &__title {
@@ -138,8 +113,8 @@ export default {
     line-height: 20px;   
     color: #262525;
     position: absolute;
-    left: 20%;
-    bottom: -162px;
+    left: 11%;
+    bottom: 11%;
   }
     
   &__image {    
@@ -227,5 +202,12 @@ export default {
       line-height: 14px;       
     }
   }
+}
+
+.desc-enter-active, .desc-leave-active {
+  transition: opacity .5s;
+}
+.desc-enter, .desc-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
 }
 </style>

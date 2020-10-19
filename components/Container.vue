@@ -9,7 +9,7 @@
           :index="i")
     .card
       Card(v-for="(item, i) in data"
-           :active="isActiveNumber==i" 
+           :active="isActiveNumber==i"
            :title="item.title"
            :text="item.text"
            :img="item.img"
@@ -17,7 +17,9 @@
            :callback="isActive"
            :quan="data.length"
            :index="i"
-           :key="i")
+           :key="i"
+           :animateTop="animateTop"
+           )
 </template>
 
 <script>
@@ -27,11 +29,28 @@ export default {
     return {
       isActiveNumber: 0, 
       data: this.$store.state.menuLinks,
+      animateTop: false,
     }
   },
   methods: {
-    isActive(i) {
-      this.isActiveNumber = i;     
+    isActive(i, item) {
+          
+      let a = this.isActiveNumber;
+       
+      if (i < a) {
+                
+        this.animateTop = false;
+        console.log('меньше');
+          
+      } else {
+              
+        this.animateTop = true;
+        console.log('больше');
+        
+      }    
+            
+      this.isActiveNumber = i; 
+      
     },
   },
 }
@@ -72,11 +91,4 @@ export default {
     width: 100%;
   }
 }
-
-// .fade-enter-active, .fade-leave-active {
-//   transition: opacity .5s;
-// }
-// .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
-//   opacity: 0;
-// }
 </style>

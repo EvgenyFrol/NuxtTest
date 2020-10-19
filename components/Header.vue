@@ -52,11 +52,11 @@ export default {
     },    
     returnMouse(event) {    
     
-        this.$refs.widthLine.style.right = "auto";
-        this.$refs.widthLine.style.left = this.marginFromParent + 'px';
-        
-        this.widthLinks = event.target.offsetLeft + event.target.offsetWidth - this.marginFromParent;
-        this.$refs.widthLine.style.left = event.target.offsetLeft + event.target.offsetWidth;
+      this.$refs.widthLine.style.right = "auto";
+      this.$refs.widthLine.style.left = this.marginFromParent + 'px';
+      
+      this.widthLinks = event.target.offsetLeft + event.target.offsetWidth - this.marginFromParent;
+      this.$refs.widthLine.style.left = event.target.offsetLeft + event.target.offsetWidth;
     },    
     returnWidthLink(i, event) {    
 

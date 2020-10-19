@@ -1,7 +1,7 @@
 <template lang="pug">
   .menu__link(@click="callback(index)"
               @mousemove="widthTitle"
-              :class="active?'active':''"
+              :class="active?'menu__active':''"
               ref="linksWidth") {{title}}
 </template>
 
@@ -27,7 +27,7 @@ export default {
   methods: {
     widthTitle(event) {
       this.widthLinkTitle = this.$refs.linksWidth.clientWidth;
-    }
+    },
   }
 }
 </script>
@@ -44,8 +44,8 @@ export default {
     line-height: 15px;
     letter-spacing: 0.567739px;
     text-decoration: none;
-    transition: font-weight 0.2s ease;
-    transition: background 0.2s ease;
+    transition: font-weight 0.5s ease,
+                background 0.5s ease;
     flex: none;
     order: 2;
     align-self: flex-start;
@@ -66,7 +66,7 @@ export default {
   }
 }  
 
-  .active {
+  .menu__active {
     background:linear-gradient(to top, #EBD8CC 50%, #FFF 50%);
     font-family: Roboto;
     font-style: normal;    
@@ -75,8 +75,6 @@ export default {
     line-height: 16px;
     letter-spacing: 0.567739px;      
     text-transform: uppercase;
-    transition: font-weight 0.2s ease;
-    transition: background 0.2s ease;
     
     @media (max-width:1024px) {
       font-size: 10px;
