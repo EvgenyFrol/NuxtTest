@@ -35,6 +35,7 @@ export default {
 <style lang="scss">
   .menu__link {
     height: auto;
+    background: transparent;
     padding: 2px 4px;
     margin-top: 32px;
     font-family: Roboto, sans-serif;
@@ -44,8 +45,8 @@ export default {
     line-height: 15px;
     letter-spacing: 0.567739px;
     text-decoration: none;
-    transition: font-weight 0.5s ease,
-                background 0.5s ease;
+    transition: font-weight .1s ease,
+                background 0.3s ease;
     flex: none;
     order: 2;
     align-self: flex-start;

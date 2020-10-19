@@ -1,13 +1,15 @@
 <template lang="pug">
   .card__item(:class="active?'card__item--active':''")
-    .card__desc(:class="{'slideUp': animateTop, 'slideDown': !animateTop}")
-      h1.card__title {{title}}
-      |
-      p.card__text(ref="actText") {{text}}
+    transition(name="slide-text" mode="out-in")
+      .card__desc(v-if="active?show==true:false")
+        h1.card__title {{title}}
+        |
+        p.card__text(ref="actText") {{text}}
         span.card__box(ref="continue" ) ...  
     span.card__number {{index + 1}} / {{quan}}
-    .card__image
-      img.card__pic(:src='img' :class="{'slideUp': !animateTop, 'slideDown': animateTop}" :alt='alt')
+    transition(name="slide-image" mode="in-out")
+      .card__image(v-if="active?show==true:false")
+        img.card__pic(:src='img' :alt='alt')
 </template>
 
 <script>
@@ -16,8 +18,9 @@ export default {
   data() {
     return {
       isActiveNumber: 0, 
+      show: true,
     }
-  },
+  }, 
   props: {
     active: Boolean,
     title: String,
@@ -38,7 +41,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .card {
   overflow: hidden;
 
@@ -62,7 +64,6 @@ export default {
     width: 50%;
     padding: 0 11%;
     position: relative;
-    
   }
   
   &__title {
@@ -204,10 +205,31 @@ export default {
   }
 }
 
-.desc-enter-active, .desc-leave-active {
-  transition: opacity .5s;
+.slide-text-enter-active {
+  transition: all .3s ease;
 }
-.desc-enter, .desc-leave-to /* .fade-leave-active до версии 2.1.8 */ {
-  opacity: 0;
+.slide-text-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-text-enter, .slide-text-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(-50%);
+  opacity: 0.5;
+}
+
+.slide-image-enter-active {
+  transition: all .3s ease;
+}
+.slide-image-enter-to {
+  transition: all .4s ease;
+}
+.slide-image-enter {
+  transform: rotate(360deg);
+  translate: transform 4s;
+}
+.slide-image-enter, .slide-image-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(100%);
+  
 }
 </style>
