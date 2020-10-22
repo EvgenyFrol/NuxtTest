@@ -34,6 +34,7 @@ export default {
   position: absolute;
   top: 25px;
   left: 25px;
+  z-index:3;
 }
 
 .buttonBurger {
@@ -44,6 +45,7 @@ export default {
   top: 25px;
   right: 25px;
   padding: 25px;
+  z-index:3;
   
   &:hover {
   

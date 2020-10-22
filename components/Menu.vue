@@ -1,7 +1,7 @@
 <template lang="pug">
   .menu__link(@click="callback(index)"
               @mousemove="widthTitle"
-              :class="active?'menu__active':''"
+              :class="active?'menu__link--active':''"
               ref="linksWidth") {{title}}
 </template>
 
@@ -33,8 +33,10 @@ export default {
 </script>
 
 <style lang="scss">
-  .menu__link {
+.menu {
+  &__link {
     height: auto;
+    width: fit-content;
     background: transparent;
     padding: 2px 4px;
     margin-top: 28px;
@@ -50,24 +52,13 @@ export default {
     flex: none;
     order: 2;
     align-self: flex-start;
-    flex-grow: 0;    
+    flex-grow: 0;   
     
     &:hover {
       background: linear-gradient(to top, #EBD8CC 50%, #FFF 50%);   
-  }
-  
-  @media (max-width: 1440px) {
-    margin-top: 20px;
-  }
-  
-  @media (max-width:1024px) {
-    margin-top: 15px;
-    font-size: 10px;
-    line-height: 12px;
-  }
-}  
-
-  .menu__active {
+    }
+    
+    &--active {
     background:linear-gradient(to top, #EBD8CC 50%, #FFF 50%);
     font-family: Roboto;
     font-style: normal;    
@@ -77,11 +68,18 @@ export default {
     letter-spacing: 0.567739px;      
     text-transform: uppercase;
     
+        
+    @media (max-width: 1440px) {
+      margin-top: 20px;
+    }
+    
     @media (max-width:1024px) {
+      margin-top: 15px;
       font-size: 10px;
       line-height: 12px;
     }
+    }
   }
-  
+}
 
 </style>

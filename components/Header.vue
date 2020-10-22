@@ -100,6 +100,7 @@ export default {
   text-transform: uppercase;
   color: #262525;
   flex-grow: 0;
+  z-index:2;
   
   &__title {        
     font-size: 16px;

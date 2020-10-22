@@ -8,7 +8,7 @@
         p.card__text(ref="actText") {{item.text}}
         span.card__box(ref="continue" ) ...  
     span.card__number {{active + 1}} / {{data.length}}
-    transition(v-for="(item, i) in data" name="imgUp")
+    transition(v-for="(item, i) in data" :name="animateTop?'imgDown':'imgUp'")
       .card__image( v-if="active === i")
         img.card__pic(:src='item.img' :alt='item.alt')
 </template>
@@ -39,6 +39,8 @@ export default {
   width: 84%; 
   height: 100%;
   background: #F0F0F0;
+  position: relative;
+  overflow: hidden;
 
   &__item {    
     display: flex;
@@ -46,7 +48,6 @@ export default {
     width: 100%;    
     max-width: 1516px; 
     height: 100%;
-    position: relative;
   }
     
   &__desc {
@@ -55,7 +56,7 @@ export default {
     position: absolute;
     left: 11.5%;
     top: 38%;
-    transition: all 1s ease;
+    transition: all 0.5s ease;
   }
   
   &__title {
@@ -115,12 +116,15 @@ export default {
     right: 0;
     width: 50%;
     height: 100%;
+    transition: all 0.5s ease;
+    overflow: hidden;
   }
   
   &__pic {
     height: 100%;
     width: 100%;
     object-fit: cover;
+    
   }
   
   @media (max-width: 1440px) {
@@ -159,7 +163,6 @@ export default {
       font-size: 13px;
       line-height: 15px; 
       bottom: -119px;
-      
     }
   }
   
@@ -227,42 +230,47 @@ export default {
 .descDown-enter-to {
   opacity: 1;
   transform: none;  
-  }
+}
 
 .descDown-leave {
-  opacity: 1;
+  opacity:1;
 }
 
 .descDown-leave-to {
-  opacity: 0;
-}
-
-.image-enter-active {
-  transition: all .3s ease;
-}
-.image-enter-to {
-  transition: all .4s ease;
-}
-
-.image-enter, .image-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateY(100%); 
+  opacity:0;
 }
 
 .imgUp-enter {
-  height: 0;
+  transform: translateY(100%);
+  z-index:1;
 }
 
 .imgUp-enter-to {
-  height: 100%;
-  transition: height 4s ease;
-  }
+  z-index:1;
+}
 
 .imgUp-leave {
-  height: 100%;
+  z-index:1;
 }
 
 .imgUp-leave-to {
-  height: 0;
+  z-index:0;
 }
+
+.imgDown-enter {
+  transform: translateY(-100%);
+  z-index:1;
+}
+
+.imgDown-enter-to {
+  z-index:1;
+ }
+
+.imgDown-leave {
+  z-index:0;  
+}
+.imgDown-leave-to {
+  z-index:0;  
+}
+
 </style>
