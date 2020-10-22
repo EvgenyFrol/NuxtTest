@@ -17,7 +17,6 @@
 
 <script>
 export default {
-  name: 'Header',
   data () {
     return {
       widthLinks: 0,
@@ -96,7 +95,7 @@ export default {
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 20px 62px;
+  padding: 23px 62px 17px 62px;
   font-family: "Gilroy", sans-serif;
   text-transform: uppercase;
   color: #262525;
@@ -131,7 +130,7 @@ export default {
     padding: 0 23px;
     font-size: 12px;
     line-height: 15px;
-    letter-spacing: 0.6px;
+    letter-spacing: 0.8px;
     text-decoration: none;
     font-weight: bold;
     color: #262525;  

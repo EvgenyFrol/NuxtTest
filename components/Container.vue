@@ -7,17 +7,9 @@
           :callback="isActive" 
           :key="i",
           :index="i")
-    .card
-      Card(v-for="(item, i) in data"
-           :active="isActiveNumber==i" 
-           :title="item.title"
-           :text="item.text"
-           :img="item.img"
-           :alt="item.alt"
-           :callback="isActive"
-           :quan="data.length"
-           :index="i"
-           :key="i")
+    
+    Card(:active="isActiveNumber",
+         :animateTop="animateTop")
 </template>
 
 <script>
@@ -27,11 +19,28 @@ export default {
     return {
       isActiveNumber: 0, 
       data: this.$store.state.menuLinks,
+      animateTop: false,
     }
   },
   methods: {
-    isActive(i) {
-      this.isActiveNumber = i;     
+    isActive(i, item) {
+     
+      let a = this.isActiveNumber;
+        
+      if (i < a) {
+              
+        this.animateTop = false;
+        console.log('меньше');
+          
+      } else {
+              
+        this.animateTop = true;
+        console.log('больше');
+        
+      }    
+            
+      this.isActiveNumber = i; 
+      
     },
   },
 }
@@ -41,6 +50,7 @@ export default {
 .container {
   box-sizing: border-box;
   display: flex;
+  height: 100%;
   
   @media (max-width: 768px) {
     display: block;
@@ -49,10 +59,7 @@ export default {
 
 .menu {
   width: 14%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 0 auto 0 0;
+  margin: 14.8% auto 0 0;
 
   &:hover {
     cursor: pointer;
@@ -65,13 +72,6 @@ export default {
   }
 }
 
-.card {
-  width: 84%; 
-  
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-}
 
 // .fade-enter-active, .fade-leave-active {
 //   transition: opacity .5s;

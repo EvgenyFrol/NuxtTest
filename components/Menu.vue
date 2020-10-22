@@ -36,7 +36,7 @@ export default {
   .menu__link {
     height: auto;
     padding: 2px 4px;
-    margin-top: 32px;
+    margin-top: 28px;
     font-family: Roboto, sans-serif;
     font-style: normal;
     font-weight: 300;

@@ -1,13 +1,16 @@
 <template lang="pug">
-  .card__item(:class="active?'card__active':''")
-    .card__desc
-      span.card__number {{index + 1}} / {{quan}}
-      h1.card__title {{title}}
-      |
-      p.card__text(ref="text") {{text}}
-        span.card__box(ref="continue" ) ...      
-    .card__image
-      img.card__pic(:src='img' :alt='alt' v-)
+.card
+  .card__item
+    transition(v-for="(item, i) in data" :name="animateTop?'descUp':'descDown'")
+      .card__desc( v-if="active===i")
+        h1.card__title {{item.title}}
+        |
+        p.card__text(ref="actText") {{item.text}}
+        span.card__box(ref="continue" ) ...  
+    span.card__number {{active + 1}} / {{data.length}}
+    transition(v-for="(item, i) in data" name="imgUp")
+      .card__image( v-if="active === i")
+        img.card__pic(:src='item.img' :alt='item.alt')
 </template>
 
 <script>
@@ -15,91 +18,56 @@ export default {
   name: "Card",
   data() {
     return {
-      isActiveNumber: 0, 
+      isActiveNumber: 0,
+      data: this.$store.state.menuLinks,
     }
-  },
+  }, 
   props: {
-    active: Boolean,
-    title: String,
-    text: String,
-    img: String,
-    alt: String,
-    callback: Function,
-    index: Number,
-    quan: Number,
+    active: Number,
+    animateTop: Boolean,
   },
   computed:{
     returnMenu() {
-       return this.$parent.$data.data
+      return this.$parent.$data.data
     },
   },
-  methods: {
-    isActive(i) {
-      this.isActiveNumber = i;     
-    },
-  },
-  mounted: function () {
-    this.$nextTick(function () {  
-    
-      let f = 18; //font-size
-      let w = Math.floor(this.$refs.text.getBoundingClientRect().width); //ширина блока
-      let l = this.$refs.text.innerHTML.length; //длина текста
-      
-      let r = Math.ceil(w / f);
-      let s = Math.ceil(w / r);
-      
-      let str = r + s;
-                 
-      console.log(this.$refs.text.innerHTML.split('\n').length);
-      
-      // console.log('ширина блока с текстом = ' + w);
-      // console.log('длина текста = ' + l + ' символа');
-      // console.log(document.querySelector('.card__text').style.fontSize = f)
-      
-      if (this.$refs.text.innerHTML.length > 150) {
-        this.$refs.continue.style.display = "inline-block";
-      }
-    })
-  }  
 }
 </script>
 
 <style lang="scss">
-
 .card {
+  width: 84%; 
+  height: 100%;
+  background: #F0F0F0;
 
-  &__item {
-    display: none;
-    transition: display 0.3s ease
-  }
-  
-  &__active {
-    background: #F0F0F0;
+  &__item {    
     display: flex;
     align-items: center; 
     width: 100%;    
     max-width: 1516px; 
     height: 100%;
-    max-height: 840px;
+    position: relative;
   }
-  
+    
   &__desc {
     display: inline-block;
-    width: 50%;
-    padding: 0 11%;
-    position: relative;
+    width: 435px;
+    position: absolute;
+    left: 11.5%;
+    top: 38%;
+    transition: all 1s ease;
   }
   
   &__title {
     font-style: normal;
     font-weight: bold;
-    font-size: 3em;
+    font-size: 2.9em;
     line-height: 53px;
-    letter-spacing: 0.3552px;
+    letter-spacing: -3.65px;
     text-transform: uppercase;
     color: #262525;
     text-align: left;
-    padding: 0 0 40px 0;
+    padding: 0 0 42px 0;
   }
   
   &__text {
@@ -138,11 +106,13 @@ export default {
     line-height: 20px;   
     color: #262525;
     position: absolute;
-    left: 20%;
-    bottom: -162px;
+    left: 11%;
+    bottom: 11%;
   }
     
   &__image {    
+    position: absolute;
+    right: 0;
     width: 50%;
     height: 100%;
   }
@@ -194,6 +164,7 @@ export default {
   }
   
   @media (max-width: 768px) {
+    width: 100%;
   
     &__item {
       display: block;
@@ -227,5 +198,80 @@ export default {
       line-height: 14px;       
     }
   }
+}
+
+// .slide-text-enter-active {
+//   transition: transform .3s ease;
+// }
+
+// .slide-text-enter, .slide-text-enter-to
+// /* .slide-fade-leave-active below version 2.1.8 */ {
+//   transform: translateY(-50%);
+//   opacity: 0;
+// }
+
+.descUp-enter {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.descUp-enter-to {
+  opacity: 1;
+  transform: none;  
+  }
+
+.descUp-leave {
+  opacity: 1;
+}
+
+.descUp-leave-to {
+  opacity: 0;
+}
+
+.descDown-enter {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.descDown-enter-to {
+  opacity: 1;
+  transform: none;  
+  }
+
+.descDown-leave {
+  opacity: 1;
+}
+
+.descDown-leave-to {
+  opacity: 0;
+}
+
+.image-enter-active {
+  transition: all .3s ease;
+}
+.image-enter-to {
+  transition: all .4s ease;
+}
+
+.image-enter, .image-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(100%); 
+}
+
+.imgUp-enter {
+  height: 0;
+}
+
+.imgUp-enter-to {
+  height: 100%;
+  transition: height 4s ease;
+  }
+
+.imgUp-leave {
+  height: 100%;
+}
+
+.imgUp-leave-to {
+  height: 0;
 }
 </style>
