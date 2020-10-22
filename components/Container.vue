@@ -7,9 +7,10 @@
           :callback="isActive" 
           :key="i",
           :index="i")
-    
+
     Card(:active="isActiveNumber",
          :animateTop="animateTop")
+
 </template>
 
 <script>
@@ -24,7 +25,7 @@ export default {
   },
   methods: {
     isActive(i, item) {
-     
+    
       let a = this.isActiveNumber;
         
       if (i < a) {
@@ -71,12 +72,4 @@ export default {
     flex-flow: wrap;
   }
 }
-
-
-// .fade-enter-active, .fade-leave-active {
-//   transition: opacity .5s;
-// }
-// .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
-//   opacity: 0;
-// }
 </style>

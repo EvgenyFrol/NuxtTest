@@ -200,15 +200,6 @@ export default {
   }
 }
 
-// .slide-text-enter-active {
-//   transition: transform .3s ease;
-// }
-
-// .slide-text-enter, .slide-text-enter-to
-// /* .slide-fade-leave-active below version 2.1.8 */ {
-//   transform: translateY(-50%);
-//   opacity: 0;
-// }
 
 .descUp-enter {
   transform: translateY(100%);
