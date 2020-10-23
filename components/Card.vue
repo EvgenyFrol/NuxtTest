@@ -6,7 +6,7 @@
         h1.card__title {{item.title}}
         |
         p.card__text(ref="actText") {{item.text}}
-        span.card__box(ref="continue" ) ...  
+          span.card__box(ref="continue" ) ...  
     span.card__number {{active + 1}} / {{data.length}}
     transition(v-for="(item, i) in data" :name="animateTop?'imgDown':'imgUp'")
       .card__image( v-if="active === i")
@@ -84,7 +84,7 @@ export default {
   }
   
   &__box {
-    display: none;
+    display: inline-block;
     margin-left: 8px;
     width: 28px;
     height: 28px;

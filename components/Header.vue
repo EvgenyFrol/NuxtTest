@@ -4,9 +4,10 @@
       p.header__title Первомайская
     .header__links(ref="links")
       a.header__link(v-for="(item, i) of returnLinks"
+                    :class="isActive==i?'header__link--active':''"
                     ref="linkItem"
                     @mouseover="returnWidth(i, $event)"
-                    :class="isActive==i?'isActive':''"
+                    @mouseout="mouseOut"
                     :index="i"
                     @click="returnWidthLink(i, $event)"
                     v-) {{item.text}}
@@ -37,13 +38,13 @@ export default {
   methods:{
     returnWidth(i, event) {        
       
-      if (this.isActive >= i) {
-      
-        this.$refs.widthLine.style.left = "auto";        
-        this.widthLinks = this.$refs.links.offsetWidth - event.target.offsetLeft - this.rightDistance;           
-        this.$refs.widthLine.style.right = this.rightDistance + 'px';            
+      if (this.isActive > i) {
+               
+        this.$refs.widthLine.style.left = "auto";
+        this.$refs.widthLine.style.right = this.rightDistance + 'px';  
+        this.widthLinks = this.$refs.links.offsetWidth - event.target.offsetLeft - this.rightDistance;                              
                 
-      } else {  
+      } else  if (this.isActive < i) {  
       
         this.returnMouse(event);
         
@@ -54,8 +55,12 @@ export default {
       this.$refs.widthLine.style.right = "auto";
       this.$refs.widthLine.style.left = this.marginFromParent + 'px';
       
-      this.widthLinks = event.target.offsetLeft + event.target.offsetWidth - this.marginFromParent;
       this.$refs.widthLine.style.left = event.target.offsetLeft + event.target.offsetWidth;
+      this.widthLinks = event.target.offsetLeft + event.target.offsetWidth - this.marginFromParent;
+      
+    },
+    mouseOut() {
+      this.widthLinks = document.querySelector('.header__link--active').offsetWidth;
     },    
     returnWidthLink(i, event) {    
 
@@ -85,7 +90,7 @@ export default {
     },
   },
   mounted () {
-    this.widthLinks = document.querySelector('.isActive').offsetWidth;
+    this.widthLinks = document.querySelector('.header__link--active').offsetWidth;
   }
 }
 </script>
@@ -110,7 +115,6 @@ export default {
   
   &__links {
     width: auto;
-    height: 10px;
     position: relative;
     
                
@@ -128,7 +132,7 @@ export default {
   }
     
   &__link {
-    padding: 0 23px;
+    padding: 5px 23px;
     font-size: 12px;
     line-height: 15px;
     letter-spacing: 0.8px;

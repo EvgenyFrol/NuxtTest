@@ -1,6 +1,8 @@
 <template lang="pug">
   section.footer
-    span.footer__text Разработано в MST | 2018
+    span.footer__text Разработано в MST 
+    span.footer__text | 
+    span.footer__text 2018
 </template>
 
 <script>
