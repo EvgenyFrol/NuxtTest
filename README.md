@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # test
 
 ## Build Setup
@@ -18,3 +19,7 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+=======
+# NuxtTest
+пробное "приложение" на Nuxt.js
+>>>>>>> e2218e8750d0644e22d46ddc2a6f135cfe45ed92
