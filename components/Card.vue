@@ -189,6 +189,11 @@ export default {
   
   @media (max-width: 1440px) {
   
+    &__desc {
+      left: 8%;
+      width: 35%;
+    }
+  
     &__title {
       font-size: 33px;
       line-height: 38px;
@@ -197,26 +202,18 @@ export default {
     &__text {
       font-size: 12px;
       line-height: 20px;
-  }
-  
-    &__number {
-      bottom: -119px;   
-      font-size: 15px;
-      line-height: 17px;   
-    }
+    } 
   }
   
   @media (max-width:1024px) {
-  
-    &__title {
-      font-size: 22px;
-      line-height: 25px;
-      padding: 0 0 20px 0;
+    &__desc {
+      left: 6%;
+      width: 40%;
     }
     
     &__text {
       font-size: 12px;
-      line-height: 20px;
+      line-height: 15px;
     }
   
     &__number {
