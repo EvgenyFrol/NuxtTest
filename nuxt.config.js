@@ -42,7 +42,6 @@ export default {
   build: {
   },
   
-  target: 'static',
   router: {
     base: '/',
   }
