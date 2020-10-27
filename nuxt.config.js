@@ -44,6 +44,6 @@ export default {
   
   target: 'static',
   router: {
-    base: '/NuxtTest/'
+    base: '/',
   }
 }
