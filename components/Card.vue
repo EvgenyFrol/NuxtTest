@@ -1,36 +1,86 @@
 <template lang="pug">
 .card
-  .card__item
+  .card__item(:class="active?'card__item--active':''")
     transition(v-for="(item, i) in data" :name="animateTop?'descUp':'descDown'")
-      .card__desc( v-if="active===i")
+      .card__desc( v-if="active===i"  :style="{top: posTop}" )
         h1.card__title {{item.title}}
         |
-        p.card__text(ref="actText") {{item.text}}
-          span.card__box(ref="continue" ) ...  
-    span.card__number {{active + 1}} / {{data.length}}
+        p.card__text(:style="{height: textHeight + 'px'}" ref="text") {{item.text.length>item.size&&fullText?item.text.slice(0, item.size):item.text}}
+          span.card__box(@click="visibleText()" v-if="item.text.length>item.size") ...
+    span.card__number(ref="count") {{active + 1}} / {{data.length}}
     transition(v-for="(item, i) in data" :name="animateTop?'imgDown':'imgUp'")
       .card__image( v-if="active === i")
         img.card__pic(:src='item.img' :alt='item.alt')
+  
 </template>
 
 <script>
 export default {
   name: "Card",
   data() {
-    return {
+    return {    
       isActiveNumber: 0,
       data: this.$store.state.menuLinks,
+      textHeight: 0,
+      textMaxHeight: 0,
+      posTop: 0,
+      posLeft:0,
+      posBottom: 0,
+      fullText: true,
     }
   }, 
-  props: {
+  props: {  
     active: Number,
-    animateTop: Boolean,
+    animateTop: Boolean,    
+    size: Number,
   },
   computed:{
     returnMenu() {
       return this.$parent.$data.data
     },
   },
+  watch: {
+    active() {
+      this.posTop = 38 + '%';
+      this.fullText = true;
+    }
+  },
+  methods: {
+    visibleText() {
+      
+      this.fullText = !this.fullText
+             
+      this.$refs.text[0].classList.toggle('card__text--open');
+      
+      let str = parseInt(getComputedStyle(this.$refs.text[0]).lineHeight, 10);
+      let padd = (document.querySelector('.card__item').offsetHeight - document.querySelector('.card__desc').offsetHeight) / 4; 
+      console.log(padd)
+      
+      if (this.$refs.text[0].classList.contains('card__text--open')) {
+   
+        this.posTop = padd + 'px';
+        this.textHeight = document.querySelector('.card__text--open').offsetHeight;
+        
+        this.$refs.count.style.opacity = 0; 
+          
+      } else this.changeTop();  
+    },
+    changeTop() {
+        
+      let str = parseInt(getComputedStyle(this.$refs.text[0]).lineHeight, 10);   
+        
+      this.textHeight = str * 3;
+      this.textMaxHeight = str * 10;
+      this.posTop = 38 + '%';  
+      this.$refs.text[0].scrollTop = 0;
+      this.$refs.count.style.opacity = 1; 
+    }
+  },
+  mounted() {
+
+    this.changeTop(); 
+  
+  }
 }
 </script>
 
@@ -52,10 +102,10 @@ export default {
     
   &__desc {
     display: inline-block;
-    width: 435px;
+    width: 29%;
     position: absolute;
-    left: 11.5%;
     top: 38%;
+    left: 11.5%;
     transition: all 0.5s ease;
   }
   
@@ -71,27 +121,33 @@ export default {
     padding: 0 0 42px 0;
   }
   
-  &__text {
+  &__text {  
+    position: relative;
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
     line-height: 30px;
+    overflow: hidden;
     letter-spacing: -0.0220791px;
     color: #262525;
     text-align: left;
     white-space: normal;
+    transition: all 0.5s ease;
+    
+    &--open {
+      height: 100%!important;
+    }
   }
   
   &__box {
-    display: inline-block;
+    display: none;
     margin-left: 8px;
-    width: 28px;
-    height: 28px;
+    display: inline-block;
     background: #262525;
     padding: 0 7px;
-    color: #ffffff; 
-    
+    color: #ffffff;
+  
     &:hover {
       cursor: pointer;
       background: #363535;
@@ -100,15 +156,16 @@ export default {
   }
   
   &__number {
-    font-family: Gilroy, sans-serif;;
+    font-family: 'Gilroy';
     font-style: normal;
     font-weight: 300;
     font-size: 17px;
     line-height: 20px;   
     color: #262525;
     position: absolute;
-    left: 11%;
-    bottom: 11%;
+    left: 11.5%;
+    bottom: 18%;
+    transition: all 0.3s ease;
   }
     
   &__image {    
@@ -123,8 +180,11 @@ export default {
   &__pic {
     height: 100%;
     width: 100%;
-    object-fit: cover;
-    
+    object-fit: cover;    
+  }
+  
+  &__size {
+    display: none;
   }
   
   @media (max-width: 1440px) {

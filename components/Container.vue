@@ -8,8 +8,9 @@
           :key="i",
           :index="i")
 
-    Card(:active="isActiveNumber",
-         :animateTop="animateTop")
+    Card(:active="isActiveNumber"
+         :animateTop="animateTop"
+         ref="card")
 
 </template>
 
@@ -25,25 +26,23 @@ export default {
   },
   methods: {
     isActive(i, item) {
-    
+        
       let a = this.isActiveNumber;
         
       if (i < a) {
               
         this.animateTop = false;
-        console.log('меньше');
           
       } else {
               
         this.animateTop = true;
-        console.log('больше');
         
       }    
             
       this.isActiveNumber = i; 
       
-    },
-  },
+    }  
+  }
 }
 </script>
 
@@ -52,6 +51,7 @@ export default {
   box-sizing: border-box;
   display: flex;
   height: 100%;
+  opacity: 1;
   
   @media (max-width: 768px) {
     display: block;

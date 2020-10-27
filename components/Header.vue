@@ -10,7 +10,7 @@
                     @mouseout="mouseOut"
                     :index="i"
                     @click="returnWidthLink(i, $event)"
-                    v-) {{item.text}}
+                    ) {{item.text}}
       .header__links--line(:style="{width: widthLinks + 'px'}" ref="widthLine")
     .header__contacts
       a.header__contact(href="tel:+78888888888" alt="") 8 888 888 88 88
@@ -91,6 +91,7 @@ export default {
   },
   mounted () {
     this.widthLinks = document.querySelector('.header__link--active').offsetWidth;
+    
   }
 }
 </script>

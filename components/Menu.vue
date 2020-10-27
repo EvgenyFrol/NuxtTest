@@ -37,7 +37,6 @@ export default {
   &__link {
     height: auto;
     width: fit-content;
-    background: transparent;
     padding: 2px 4px;
     margin-top: 28px;
     font-family: Roboto, sans-serif;
