@@ -58,25 +58,25 @@ export default {
     }
     
     &--active {
-    background:linear-gradient(to top, #EBD8CC 50%, #FFF 50%);
-    font-family: Roboto;
-    font-style: normal;    
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 16px;
-    letter-spacing: 0.567739px;      
-    text-transform: uppercase;
-    
-        
-    @media (max-width: 1440px) {
-      margin-top: 20px;
-    }
-    
-    @media (max-width:1024px) {
-      margin-top: 15px;
-      font-size: 10px;
-      line-height: 12px;
-    }
+      background:linear-gradient(to top, #EBD8CC 50%, #FFF 50%);
+      font-family: Roboto;
+      font-style: normal;    
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 16px;
+      letter-spacing: 0.567739px;      
+      text-transform: uppercase;
+      
+          
+      @media (max-width: 1440px) {
+        margin-top: 20px;
+      }
+      
+      @media (max-width:1024px) {
+        margin-top: 15px;
+        font-size: 10px;
+        line-height: 12px;
+      }
     }
   }
 }

@@ -225,19 +225,34 @@ export default {
   
   @media (max-width: 768px) {
     width: 100%;
+    height: auto;
   
     &__item {
-      display: block;
+      display: flex;
+      flex-direction: column-reverse;     
+    }
+    
+    &__image {  
+      position: static;
+      width: 100%;
+      overflow: hidden;
+    }
+    
+    &__pic {
+      object-fit: scale-down;
     }
     
     &__desc {
-      width: 100%;
+      position: static;
+      height: 20%;
       padding: 30px 10%;
+      width: 100%;
     }
     
-    &__image {    
-      width: 100%;
-    }
+    &__text {
+      top: auto;
+      bottom: 5%;
+    }   
     
     &__number {
       top: 20px;

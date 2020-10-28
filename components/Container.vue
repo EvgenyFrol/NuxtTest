@@ -55,6 +55,7 @@ export default {
   
   @media (max-width: 768px) {
     display: block;
+    height: auto;
   }
 }
 
@@ -69,6 +70,8 @@ export default {
   @media (max-width: 768px) {
     width: 100%;
     margin: 20px auto;
+    display: flex;
+    justify-self: start;
     flex-flow: wrap;
   }
 }
