@@ -1,9 +1,12 @@
 <template lang="pug">
   section.header
     .header__headline
-      p.header__title Первомайская
-    .header__links(ref="links")
-      a.header__link(v-for="(item, i) of returnLinks"
+      a.header__title(href="/") Первомайская
+    nav.header__links(ref="links")
+      ul
+        li
+          a.header__link(v-for="(item, i) of returnLinks"
+                    :href="item.link"
                     :class="isActive==i?'header__link--active':''"
                     ref="linkItem"
                     @mouseover="returnWidth(i, $event)"
@@ -14,6 +17,12 @@
       .header__links--line(:style="{width: widthLinks + 'px'}" ref="widthLine")
     .header__contacts
       a.header__contact(href="tel:+78888888888" alt="") 8 888 888 88 88
+    .button
+    .buttonBurger
+      .burger
+        .line1
+        .line2
+        .line3
 </template>
 
 <script>
@@ -36,62 +45,62 @@ export default {
     }
   },
   methods:{
-    returnWidth(i, event) {        
-      
+    returnWidth(i, event) {
+
       if (this.isActive > i) {
-               
+
         this.$refs.widthLine.style.left = "auto";
-        this.$refs.widthLine.style.right = this.rightDistance + 'px';  
-        this.widthLinks = this.$refs.links.offsetWidth - event.target.offsetLeft - this.rightDistance;                              
-                
-      } else  if (this.isActive < i) {  
-      
+        this.$refs.widthLine.style.right = this.rightDistance + 'px';
+        this.widthLinks = this.$refs.links.offsetWidth - event.target.offsetLeft - this.rightDistance;
+
+      } else  if (this.isActive < i) {
+
         this.returnMouse(event);
-        
-      }     
-    },    
-    returnMouse(event) {    
-    
+
+      }
+    },
+    returnMouse(event) {
+
       this.$refs.widthLine.style.right = "auto";
       this.$refs.widthLine.style.left = this.marginFromParent + 'px';
-      
+
       this.$refs.widthLine.style.left = event.target.offsetLeft + event.target.offsetWidth;
       this.widthLinks = event.target.offsetLeft + event.target.offsetWidth - this.marginFromParent;
-      
+
     },
     mouseOut() {
       this.widthLinks = document.querySelector('.header__link--active').offsetWidth;
-    },    
-    returnWidthLink(i, event) {    
+    },
+    returnWidthLink(i, event) {
 
-      this.marginFromParent = event.target.offsetLeft;        
+      this.marginFromParent = event.target.offsetLeft;
       this.rightDistance = event.target.offsetParent.offsetWidth - event.target.offsetLeft - event.target.offsetWidth;
-      
-      if (this.isActive > i) {    
-      
+
+      if (this.isActive > i) {
+
         this.$refs.widthLine.style.left = "auto";
         this.$refs.widthLine.style.right = this.rightDistance + 'px';
-        
+
       } else {
-      
+
         this.$refs.widthLine.style.right = "auto";
         this.$refs.widthLine.style.left = this.marginFromParent + 'px';
-        
-      }    
-      
+
+      }
+
       this.widthLinks = event.target.offsetWidth;
-                    
+
       this.isActiveItem(i);
-      
-    },    
+
+    },
     isActiveItem(i) {
-    
-      this.isActive = i;      
+
+      this.isActive = i;
     },
   },
   mounted () {
     this.widthLinks = document.querySelector('.header__link--active').offsetWidth;
-    
+
   }
 }
 </script>
@@ -107,18 +116,24 @@ export default {
   color: #262525;
   flex-grow: 0;
   z-index:2;
-  
-  &__title {        
+  position: absolute;
+  top: 0;
+  left: 56px;
+  right: 56px;
+
+  &__title {
     font-size: 16px;
-    line-height: 21px; 
+    line-height: 21px;
     font-weight: bold;
+    text-decoration: none;
+    color: #000;
   }
-  
+
   &__links {
     width: auto;
     position: relative;
-    
-               
+
+
     &--line {
       position: absolute;
       top: 25px;
@@ -128,10 +143,10 @@ export default {
       height: 4px;
       background: #D88F5E;
       border-radius: 0.01px;
-      transition: width 0.2s ease, left 0.2s, right 0.2s;    
-    }   
+      transition: width 0.2s ease, left 0.2s, right 0.2s;
+    }
   }
-    
+
   &__link {
     padding: 5px 23px;
     font-size: 12px;
@@ -139,77 +154,143 @@ export default {
     letter-spacing: 0.8px;
     text-decoration: none;
     font-weight: bold;
-    color: #262525;  
+    color: #262525;
   }
-  
+
   &__contact {
     font-weight: bold;
     font-size: 17px;
     line-height: 21px;
     letter-spacing: 0.290629px;
     text-decoration: none;
-    color: #262525; 
+    color: #262525;
   }
-  
+
   @media (max-width: 1440px) {
-  
+
      &__title,
-     &__contact {        
+     &__contact {
       font-size: 14px;
       line-height: 18px;
     }
-  
+
     &__link {
       padding: 0 16px;
       font-size: 12px;
       line-height: 14px;
-    }  
+    }
   }
-  
+
   @media (max-width: 1024px) {
-  
+
     &__title,
-    &__contact {        
+    &__contact {
       font-size: 12px;
       line-height: 16px;
     }
-  
+
     &__link {
       padding: 0 10px;
       font-size: 8px;
       line-height: 10px;
-    }  
+    }
   }
-  
+
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
-    
+
     &__title {
       margin-bottom: 10px;
     }
-    
+
     &__links {
       display: contents;
-      
+
       &--line {
-        display: none;        
-      }   
-    } 
-    
+        display: none;
+      }
+    }
+
     &__link {
-      padding: 2px 0;      
-    } 
-    
+      padding: 2px 0;
+    }
+
     &__contacts {
       margin-top: 10px;
     }
-    
+
     .isActive {
       flex: none;
-      align-self: center;   
-      background: linear-gradient(to top, #D88F5E 50%, #FFF 50%); 
+      align-self: center;
+      background: linear-gradient(to top, #D88F5E 50%, #FFF 50%);
     }
   }
+}
+
+.button {
+  width: 70px;
+  height: 70px;
+  background: #262525;
+  position: absolute;
+  top: 25px;
+  left: -33px;
+  z-index:3;
+}
+
+.buttonBurger {
+  width: 70px;
+  height: 70px;
+  background: #262525;
+  position: absolute;
+  top: 25px;
+  right: -33px;
+  padding: 25px;
+  z-index:3;
+
+  &:hover {
+
+    .line1,
+    .line3 {
+      width: 25px;
+      height: 3px;
+    }
+
+    .line2 {
+      width: 45px;
+      height: 3px;
+      margin: 5px 0;
+    }
+  }
+}
+
+.burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: rotate(-45deg);
+}
+
+.line1,
+.line2,
+.line3 {
+  transition: width 0.2s ease,
+              height 0.2s ease,
+              margin 0.2s ease;
+}
+
+.line1,
+.line3 {
+  width: 20px;
+  height: 2px;
+  background: #fff;
+}
+
+.line2 {
+  width: 42px;
+  height: 2px;
+  margin: 6px 0;
+  background: #fff;
 }
 </style>

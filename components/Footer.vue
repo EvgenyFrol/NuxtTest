@@ -1,7 +1,7 @@
 <template lang="pug">
   section.footer
-    span.footer__text Разработано в MST 
-    span.footer__text | 
+    span.footer__text Разработано в MST
+    span.footer__text |
     span.footer__text 2018
 </template>
 
@@ -15,7 +15,9 @@ export default {
   .footer {
     padding: 20px 0;
     flex-grow: 0;
-    
+    position: absolute;
+    bottom: 0;
+
     &__text {
       font-family: Gilroy;
       font-style: normal;
@@ -26,7 +28,7 @@ export default {
       text-transform: uppercase;
       color: #505050;
     }
-    
+
     @media (max-width: 768px) {
       padding: 30px 0;
     }
