@@ -1,10 +1,10 @@
 <template lang="pug">
   section.container
-    .menu 
-      Menu(v-for="(item, i) in data" 
-          :title="item.title" 
-          :active="isActiveNumber==i" 
-          :callback="isActive" 
+    .menu
+      Menu(v-for="(item, i) in data"
+          :title="item.title"
+          :active="isActiveNumber==i"
+          :callback="isActive"
           :key="i",
           :index="i")
 
@@ -19,29 +19,29 @@ export default {
   name: 'Container',
   data () {
     return {
-      isActiveNumber: 0, 
+      isActiveNumber: 0,
       data: this.$store.state.menuLinks,
       animateTop: false,
     }
   },
   methods: {
     isActive(i, item) {
-        
+
       let a = this.isActiveNumber;
-        
+
       if (i < a) {
-              
+
         this.animateTop = false;
-          
+
       } else {
-              
+
         this.animateTop = true;
-        
-      }    
-            
-      this.isActiveNumber = i; 
-      
-    }  
+
+      }
+
+      this.isActiveNumber = i;
+
+    }
   }
 }
 </script>
@@ -52,7 +52,7 @@ export default {
   display: flex;
   height: 100%;
   opacity: 1;
-  
+
   @media (max-width: 768px) {
     display: block;
     height: auto;
@@ -66,7 +66,7 @@ export default {
   &:hover {
     cursor: pointer;
   }
-  
+
   @media (max-width: 768px) {
     width: 100%;
     margin: 20px auto;

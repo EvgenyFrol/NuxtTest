@@ -11,14 +11,14 @@
     transition(v-for="(item, i) in data" :name="animateTop?'imgDown':'imgUp'")
       .card__image( v-if="active === i")
         img.card__pic(:src='item.img' :alt='item.alt')
-  
+
 </template>
 
 <script>
 export default {
   name: "Card",
   data() {
-    return {    
+    return {
       isActiveNumber: 0,
       data: this.$store.state.menuLinks,
       textHeight: 0,
@@ -28,10 +28,10 @@ export default {
       posBottom: 0,
       fullText: true,
     }
-  }, 
-  props: {  
+  },
+  props: {
     active: Number,
-    animateTop: Boolean,    
+    animateTop: Boolean,
     size: Number,
   },
   computed:{
@@ -47,59 +47,59 @@ export default {
   },
   methods: {
     visibleText() {
-      
+
       this.fullText = !this.fullText
-             
+
       this.$refs.text[0].classList.toggle('card__text--open');
-      
+
       let str = parseInt(getComputedStyle(this.$refs.text[0]).lineHeight, 10);
-      let padd = (document.querySelector('.card__item').offsetHeight - document.querySelector('.card__desc').offsetHeight) / 4; 
+      let padd = (document.querySelector('.card__item').offsetHeight - document.querySelector('.card__desc').offsetHeight) / 4;
       console.log(padd)
-      
+
       if (this.$refs.text[0].classList.contains('card__text--open')) {
-   
+
         this.posTop = padd + 'px';
         this.textHeight = document.querySelector('.card__text--open').offsetHeight;
-        
-        this.$refs.count.style.opacity = 0; 
-          
-      } else this.changeTop();  
+
+        this.$refs.count.style.opacity = 0;
+
+      } else this.changeTop();
     },
     changeTop() {
-        
-      let str = parseInt(getComputedStyle(this.$refs.text[0]).lineHeight, 10);   
-        
+
+      let str = parseInt(getComputedStyle(this.$refs.text[0]).lineHeight, 10);
+
       this.textHeight = str * 3;
       this.textMaxHeight = str * 10;
-      this.posTop = 38 + '%';  
+      this.posTop = 38 + '%';
       this.$refs.text[0].scrollTop = 0;
-      this.$refs.count.style.opacity = 1; 
+      this.$refs.count.style.opacity = 1;
     }
   },
   mounted() {
 
-    this.changeTop(); 
-  
+    // this.changeTop();
+
   }
 }
 </script>
 
 <style lang="scss">
 .card {
-  width: 84%; 
+  width: 84%;
   height: 100%;
   background: #F0F0F0;
   position: relative;
   overflow: hidden;
 
-  &__item {    
+  &__item {
     display: flex;
-    align-items: center; 
-    width: 100%;    
-    max-width: 1516px; 
+    align-items: center;
+    width: 100%;
+    max-width: 1516px;
     height: 100%;
   }
-    
+
   &__desc {
     display: inline-block;
     width: 29%;
@@ -108,7 +108,7 @@ export default {
     left: 11.5%;
     transition: all 0.5s ease;
   }
-  
+
   &__title {
     font-style: normal;
     font-weight: bold;
@@ -120,8 +120,8 @@ export default {
     text-align: left;
     padding: 0 0 42px 0;
   }
-  
-  &__text {  
+
+  &__text {
     position: relative;
     font-family: Roboto;
     font-style: normal;
@@ -134,12 +134,12 @@ export default {
     text-align: left;
     white-space: normal;
     transition: all 0.5s ease;
-    
+
     &--open {
       height: 100%!important;
     }
   }
-  
+
   &__box {
     display: none;
     margin-left: 8px;
@@ -147,28 +147,28 @@ export default {
     background: #262525;
     padding: 0 7px;
     color: #ffffff;
-  
+
     &:hover {
       cursor: pointer;
       background: #363535;
-      color: #ffffffbd; 
+      color: #ffffffbd;
     }
   }
-  
+
   &__number {
     font-family: 'Gilroy';
     font-style: normal;
     font-weight: 300;
     font-size: 17px;
-    line-height: 20px;   
+    line-height: 20px;
     color: #262525;
     position: absolute;
     left: 11.5%;
     bottom: 18%;
     transition: all 0.3s ease;
   }
-    
-  &__image {    
+
+  &__image {
     position: absolute;
     right: 0;
     width: 50%;
@@ -176,101 +176,101 @@ export default {
     transition: all 0.5s ease;
     overflow: hidden;
   }
-  
+
   &__pic {
     height: 100%;
     width: 100%;
-    object-fit: cover;    
+    object-fit: cover;
   }
-  
+
   &__size {
     display: none;
   }
-  
+
   @media (max-width: 1440px) {
-  
+
     &__desc {
       left: 8%;
       width: 35%;
     }
-  
+
     &__title {
       font-size: 33px;
       line-height: 38px;
     }
-    
+
     &__text {
       font-size: 12px;
       line-height: 20px;
-    } 
+    }
   }
-  
+
   @media (max-width:1024px) {
     &__desc {
       left: 6%;
       width: 40%;
     }
-    
+
     &__text {
       font-size: 12px;
       line-height: 15px;
     }
-  
+
     &__number {
       font-size: 13px;
-      line-height: 15px; 
+      line-height: 15px;
       bottom: -119px;
     }
   }
-  
+
   @media (max-width: 768px) {
     width: 100%;
     height: auto;
-  
+
     &__item {
       display: flex;
-      flex-direction: column-reverse;     
+      flex-direction: column-reverse;
     }
-    
-    &__image {  
+
+    &__image {
       position: static;
       width: 100%;
       overflow: hidden;
     }
-    
+
     &__pic {
       object-fit: scale-down;
     }
-    
+
     &__desc {
       position: static;
       height: 20%;
       padding: 30px 10%;
       width: 100%;
     }
-    
+
     &__text {
       top: auto;
       bottom: 5%;
-    }   
-    
+    }
+
     &__number {
       top: 20px;
       right: 20px;
       left: auto;
-    }    
-    
+    }
+
     &__box {
       width: 20px;
       height: 20px;
       padding: 0 5px;
     }
   }
-  
+
   @media (max-width: 375px) {
     &__number {
       font-size: 12px;
-      line-height: 14px;       
+      line-height: 14px;
     }
   }
 }
@@ -283,7 +283,7 @@ export default {
 
 .descUp-enter-to {
   opacity: 1;
-  transform: none;  
+  transform: none;
   }
 
 .descUp-leave {
@@ -301,7 +301,7 @@ export default {
 
 .descDown-enter-to {
   opacity: 1;
-  transform: none;  
+  transform: none;
 }
 
 .descDown-leave {
@@ -339,10 +339,10 @@ export default {
  }
 
 .imgDown-leave {
-  z-index:0;  
+  z-index:0;
 }
 .imgDown-leave-to {
-  z-index:0;  
+  z-index:0;
 }
 
 </style>
