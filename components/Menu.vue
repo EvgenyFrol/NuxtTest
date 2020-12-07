@@ -46,15 +46,11 @@ export default {
     line-height: 15px;
     letter-spacing: 0.567739px;
     text-decoration: none;
-    transition: font-weight .1s ease,
-                background 0.3s ease;
-    flex: none;
-    order: 2;
-    align-self: flex-start;
-    flex-grow: 0;   
+    
     
     &:hover {
-      background: linear-gradient(to top, #EBD8CC 50%, #FFF 50%);   
+      background: linear-gradient(to top, #EBD8CC 50%, #FFF 50%); 
+ 
     }
     
     &--active {
@@ -80,5 +76,6 @@ export default {
     }
   }
 }
+
 
 </style>

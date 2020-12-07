@@ -32,11 +32,7 @@ export default {
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
-        // Simple usage
-        '@nuxtjs/router',
-
-        // With options
-        ['@nuxtjs/router', { /* module options */ }]
+       
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)

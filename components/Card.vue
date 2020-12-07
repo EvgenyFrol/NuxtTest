@@ -86,11 +86,13 @@ export default {
 
 <style lang="scss">
 .card {
+
   width: 84%;
-  height: 100%;
   background: #F0F0F0;
   position: relative;
   overflow: hidden;
+  top: 64px;
+  height: 87vh;
 
   &__item {
     display: flex;
@@ -128,7 +130,6 @@ export default {
     font-weight: normal;
     font-size: 18px;
     line-height: 30px;
-    overflow: hidden;
     letter-spacing: -0.0220791px;
     color: #262525;
     text-align: left;
