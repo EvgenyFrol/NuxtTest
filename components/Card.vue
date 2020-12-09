@@ -7,7 +7,8 @@
         |
         p.card__text(:style="{height: textHeight + 'px'}" ref="text") {{item.text.length>item.size&&fullText?item.text.slice(0, item.size):item.text}}
           span.card__box(@click="visibleText()" v-if="item.text.length>item.size") ...
-    span.card__number(ref="count") {{active + 1}} / {{data.length}}
+    transition(name="counter" mode="out-in")
+      span.card__number(ref="count") {{active + 1}} / {{data.length}}
     transition(v-for="(item, i) in data" :name="animateTop?'imgDown':'imgUp'")
       .card__image( v-if="active === i")
         img.card__pic(:src='item.img' :alt='item.alt')
@@ -78,7 +79,7 @@ export default {
   },
   mounted() {
 
-    // this.changeTop();
+    this.changeTop();
 
   }
 }
@@ -276,6 +277,24 @@ export default {
   }
 }
 
+
+.counter-enter {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.counter-enter-to {
+  opacity: 1;
+  transform: none;
+  }
+
+.counter-leave {
+  opacity: 1;
+}
+
+.counter-leave-to {
+  opacity: 0;
+}
 
 .descUp-enter {
   transform: translateY(100%);

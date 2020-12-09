@@ -1,11 +1,13 @@
 <template lang="pug">
-  .silent
+  .content
+    Header
+    Nuxt
+    Footer
 </template>
 
 <script>
 
 export default {
-  layout: 'content',
 }
 </script>
 

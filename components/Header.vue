@@ -5,16 +5,16 @@
     nav.header__links(ref="links")
       ul
         li
-          a.header__link(v-for="(item, i) of returnLinks"
-                    :href="item.link"
+          nuxt-link.header__link(v-for="(item, i) of returnLinks"
+                    :to="item.link"
                     :class="isActive==i?'header__link--active':''"
                     ref="linkItem"
-                    @mouseover="returnWidth(i, $event)"
-                    @mouseout="mouseOut"
+                    @mouseover.native="calcWidth(i, $event)"
+                    @mouseout.native="calcWidth(i, $event)"
                     :index="i"
-                    @click="returnWidthLink(i, $event)"
-                    ) {{item.text}}
-      .header__links--line(:style="{width: widthLinks + 'px'}" ref="widthLine")
+                    @click.native="calcWidth(i, $event)"
+                  ) {{item.text}}
+        .header__links--line(:style="{width: widthLinks + 'px'}" ref="widthLine")
     .header__contacts
       a.header__contact(href="tel:+78888888888" alt="") 8 888 888 88 88
     .button
@@ -30,11 +30,7 @@ export default {
   data () {
     return {
       widthLinks: 0,
-      widthLink: 0,
-      mouseX: 0,
-      mouseItem: 0,
       marginFromParent: 0,
-      widthForActiveItem: 0,
       isActive: 0,
       rightDistance: 0,
     }
@@ -45,58 +41,45 @@ export default {
     }
   },
   methods:{
-    returnWidth(i, event) {
+    calcWidth(i, event) {
+
+      if (event.type === 'click') {
+
+        this.marginFromParent = event.target.offsetLeft;
+        this.rightDistance = event.target.offsetParent.offsetWidth - event.target.offsetLeft - event.target.offsetWidth;
+
+      }
 
       if (this.isActive > i) {
 
         this.$refs.widthLine.style.left = "auto";
         this.$refs.widthLine.style.right = this.rightDistance + 'px';
+
         this.widthLinks = this.$refs.links.offsetWidth - event.target.offsetLeft - this.rightDistance;
 
-      } else  if (this.isActive < i) {
-
-        this.returnMouse(event);
-
-      }
-    },
-    returnMouse(event) {
-
-      this.$refs.widthLine.style.right = "auto";
-      this.$refs.widthLine.style.left = this.marginFromParent + 'px';
-
-      this.$refs.widthLine.style.left = event.target.offsetLeft + event.target.offsetWidth;
-      this.widthLinks = event.target.offsetLeft + event.target.offsetWidth - this.marginFromParent;
-
-    },
-    mouseOut() {
-      this.widthLinks = document.querySelector('.header__link--active').offsetWidth;
-    },
-    returnWidthLink(i, event) {
-
-      this.marginFromParent = event.target.offsetLeft;
-      this.rightDistance = event.target.offsetParent.offsetWidth - event.target.offsetLeft - event.target.offsetWidth;
-
-      if (this.isActive > i) {
-
-        this.$refs.widthLine.style.left = "auto";
-        this.$refs.widthLine.style.right = this.rightDistance + 'px';
-
-      } else {
+      } else if (this.isActive < i) {
 
         this.$refs.widthLine.style.right = "auto";
-        this.$refs.widthLine.style.left = this.marginFromParent + 'px';
+        this.$refs.widthLine.style.left = this.marginFromParent + 'px';   
+
+        this.$refs.widthLine.style.left = event.target.offsetLeft + event.target.offsetWidth;
+        this.widthLinks = event.target.offsetLeft + event.target.offsetWidth - this.marginFromParent;
+     
+      }
+
+      if (event.type === 'mouseout') {
+
+        this.widthLinks = document.querySelector('.header__link--active').offsetWidth;
 
       }
 
-      this.widthLinks = event.target.offsetWidth;
+      if (event.type === 'click') {
 
-      this.isActiveItem(i);
-
-    },
-    isActiveItem(i) {
-
-      this.isActive = i;
-    },
+        this.isActive = i;
+        this.widthLinks = event.target.offsetWidth;     
+        
+      }
+    },    
   },
   mounted () {
     this.widthLinks = document.querySelector('.header__link--active').offsetWidth;
@@ -122,9 +105,7 @@ export default {
   right: 56px;
 
   &__title {
-    font-size: 16px;
-    line-height: 21px;
-    font-weight: bold;
+    font: bold 16px/21px "Gilroy", sans-serif;
     text-decoration: none;
     color: #000;
   }
@@ -132,7 +113,6 @@ export default {
   &__links {
     width: auto;
     position: relative;
-
 
     &--line {
       position: absolute;
@@ -149,19 +129,15 @@ export default {
 
   &__link {
     padding: 5px 23px;
-    font-size: 12px;
-    line-height: 15px;
+    font: bold 12px/15px "Gilroy", sans-serif;
     letter-spacing: 0.8px;
     text-decoration: none;
-    font-weight: bold;
     color: #262525;
   }
 
   &__contact {
-    font-weight: bold;
-    font-size: 17px;
-    line-height: 21px;
-    letter-spacing: 0.290629px;
+    font: bold 17px/21px "Gilroy", sans-serif;
+    letter-spacing: 0.29px;
     text-decoration: none;
     color: #262525;
   }
