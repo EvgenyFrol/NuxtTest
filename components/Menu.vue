@@ -1,6 +1,5 @@
 <template lang="pug">
-  .menu__link(@click="callback(index)"
-              @mousemove="widthTitle"
+  .menu__link(@click="change"
               :class="active?'menu__link--active':''"
               ref="linksWidth") 
     span {{title}}
@@ -12,7 +11,6 @@ export default {
   props: {
     title: String,
     active: Boolean,
-    callback: Function,
     index: Number,
   },
   data () {
@@ -26,9 +24,9 @@ export default {
     }
   },
   methods: {
-    widthTitle(event) {
-      this.widthLinkTitle = this.$refs.linksWidth.clientWidth;
-    },
+    change() {
+      this.$emit('change', {index: this.index})
+    }
   }
 }
 </script>

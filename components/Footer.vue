@@ -19,14 +19,11 @@ export default {
     bottom: 0;
 
     &__text {
-      font-family: Gilroy;
-      font-style: normal;
-      font-weight: 300;
-      font-size: 13px;
-      line-height: 15px;
-      letter-spacing: 0.175729px;
+      font: 300 13px/15px "Gilroy", normal;
+      letter-spacing: 0.178px;
       text-transform: uppercase;
       color: #505050;
+      padding-right: 30px;
     }
 
     @media (max-width: 768px) {

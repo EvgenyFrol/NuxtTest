@@ -2,16 +2,15 @@
 .card
   .card__item(:class="active?'card__item--active':''")
     transition(v-for="(item, i) in data" :name="animateTop?'descUp':'descDown'")
-      .card__desc( v-if="active===i"  :style="{top: posTop}" )
-        h1.card__title {{item.title}}
+      .card__desc( v-if="active===i")
+        h1.card__title(v-text="item.title")
         |
-        p.card__text(:style="{height: textHeight + 'px'}" ref="text") {{item.text.length>item.size&&fullText?item.text.slice(0, item.size):item.text}}
-          span.card__box(@click="visibleText()" v-if="item.text.length>item.size") ...
-    transition(name="counter" mode="out-in")
-      span.card__number(ref="count") {{active + 1}} / {{data.length}}
+        span.card__text(ref="text" v-text="item.text") 
+    transition(name="counter" mode="in-out" ) 
+      span.card__number(:key="active") {{active + 1}} / {{data.length}}
     transition(v-for="(item, i) in data" :name="animateTop?'imgDown':'imgUp'")
-      .card__image( v-if="active === i")
-        img.card__pic(:src='item.img' :alt='item.alt')
+      .card__image(v-if="active === i")
+        img.card__pic(:src='item.img' :alt='item.title')
 
 </template>
 
@@ -22,64 +21,56 @@ export default {
     return {
       isActiveNumber: 0,
       data: this.$store.state.menuLinks,
-      textHeight: 0,
-      textMaxHeight: 0,
-      posTop: 0,
-      posLeft:0,
-      posBottom: 0,
-      fullText: true,
+      full: true, 
     }
   },
   props: {
     active: Number,
     animateTop: Boolean,
-    size: Number,
-  },
-  computed:{
-    returnMenu() {
-      return this.$parent.$data.data
-    },
-  },
-  watch: {
-    active() {
-      this.posTop = 38 + '%';
-      this.fullText = true;
-    }
   },
   methods: {
-    visibleText() {
+    cutText() {
+      let textBlock = this.$refs.text[0];
+      let text = textBlock.textContent.split(' ');
+      let checkText = () => textBlock.getClientRects().length > 3;
 
-      this.fullText = !this.fullText
+      this.full = false;
+  
+      let correctLength = () => {
+        let button = document.createElement('span');
+        button.classList.add('card__box');
+        button.textContent = '...';
+        
+        button.addEventListener('click', () => {
+          if (this.full) correctLength(button);
+          else {
+            this.full = true;
+            textBlock.innerHTML = text.join(' ');
+            textBlock.append(button);
+          }
+        }
+      );
+      
+      for (let i = 0; i < text.length; i++) {
+        textBlock.innerHTML = text.slice(0, text.length - 1 - i).join(' ');
+        textBlock.append(button);
+        if(!checkText()) break
+      }
+        
+      this.full = false;
+    }
 
-      this.$refs.text[0].classList.toggle('card__text--open');
-
-      let str = parseInt(getComputedStyle(this.$refs.text[0]).lineHeight, 10);
-      let padd = (document.querySelector('.card__item').offsetHeight - document.querySelector('.card__desc').offsetHeight) / 4;
-      console.log(padd)
-
-      if (this.$refs.text[0].classList.contains('card__text--open')) {
-
-        this.posTop = padd + 'px';
-        this.textHeight = document.querySelector('.card__text--open').offsetHeight;
-
-        this.$refs.count.style.opacity = 0;
-
-      } else this.changeTop();
-    },
-    changeTop() {
-
-      let str = parseInt(getComputedStyle(this.$refs.text[0]).lineHeight, 10);
-
-      this.textHeight = str * 3;
-      this.textMaxHeight = str * 10;
-      this.posTop = 38 + '%';
-      this.$refs.text[0].scrollTop = 0;
-      this.$refs.count.style.opacity = 1;
+      if (checkText()) correctLength();
     }
   },
   mounted() {
 
-    this.changeTop();
+    this.cutText();
+
+  },
+  updated() {
+
+    this.cutText();
 
   }
 }
@@ -113,10 +104,7 @@ export default {
   }
 
   &__title {
-    font-style: normal;
-    font-weight: bold;
-    font-size: 2.9em;
-    line-height: 53px;
+    font: bold 2.9em/53px "Gilroy", sans-serif;
     letter-spacing: -3.65px;
     text-transform: uppercase;
     color: #262525;
@@ -126,24 +114,18 @@ export default {
 
   &__text {
     position: relative;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 30px;
+    font: 300 18px/30px "Roboto", sans-serif;
     letter-spacing: -0.0220791px;
     color: #262525;
     text-align: left;
     white-space: normal;
     transition: all 0.5s ease;
-
-    &--open {
-      height: 100%!important;
-    }
   }
 
   &__box {
-    display: none;
+    width: 28px;
+    height: 28px;
+    display: inline;
     margin-left: 8px;
     display: inline-block;
     background: #262525;
@@ -158,16 +140,12 @@ export default {
   }
 
   &__number {
-    font-family: 'Gilroy';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 17px;
-    line-height: 20px;
+    font: 300 17px/20px "Gilroy", serif;
     color: #262525;
     position: absolute;
     left: 11.5%;
     bottom: 18%;
-    transition: all 0.3s ease;
+    transition: all 0.1s ease;
   }
 
   &__image {
@@ -184,108 +162,15 @@ export default {
     width: 100%;
     object-fit: cover;
   }
-
-  &__size {
-    display: none;
-  }
-
-  @media (max-width: 1440px) {
-
-    &__desc {
-      left: 8%;
-      width: 35%;
-    }
-
-    &__title {
-      font-size: 33px;
-      line-height: 38px;
-    }
-
-    &__text {
-      font-size: 12px;
-      line-height: 20px;
-    }
-  }
-
-  @media (max-width:1024px) {
-    &__desc {
-      left: 6%;
-      width: 40%;
-    }
-
-    &__text {
-      font-size: 12px;
-      line-height: 15px;
-    }
-
-    &__number {
-      font-size: 13px;
-      line-height: 15px;
-      bottom: -119px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    width: 100%;
-    height: auto;
-
-    &__item {
-      display: flex;
-      flex-direction: column-reverse;
-    }
-
-    &__image {
-      position: static;
-      width: 100%;
-      overflow: hidden;
-    }
-
-    &__pic {
-      object-fit: scale-down;
-    }
-
-    &__desc {
-      position: static;
-      height: 20%;
-      padding: 30px 10%;
-      width: 100%;
-    }
-
-    &__text {
-      top: auto;
-      bottom: 5%;
-    }
-
-    &__number {
-      top: 20px;
-      right: 20px;
-      left: auto;
-    }
-
-    &__box {
-      width: 20px;
-      height: 20px;
-      padding: 0 5px;
-    }
-  }
-
-  @media (max-width: 375px) {
-    &__number {
-      font-size: 12px;
-      line-height: 14px;
-    }
-  }
 }
 
-
 .counter-enter {
-  transform: translateY(100%);
   opacity: 0;
 }
 
 .counter-enter-to {
-  opacity: 1;
-  transform: none;
+  opacity: 0.5;
+
   }
 
 .counter-leave {
@@ -298,7 +183,7 @@ export default {
 
 .descUp-enter {
   transform: translateY(100%);
-  opacity: 0;
+  opacity: 1;
 }
 
 .descUp-enter-to {

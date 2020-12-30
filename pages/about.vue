@@ -1,12 +1,12 @@
 <template lang="pug">
-  section.container
+  .container
     .menu
       Menu(v-for="(item, i) in data"
           :title="item.title"
           :active="isActiveNumber==i"
-          :callback="isActive"
           :key="i",
-          :index="i")
+          :index="i"
+          @change="isActive")
 
     Card(:active="isActiveNumber"
          :animateTop="animateTop"
@@ -25,11 +25,11 @@ export default {
     }
   },
   methods: {
-    isActive(i, item) {
+    isActive(value) {
 
       let a = this.isActiveNumber;
 
-      if (i < a) {
+      if (value.index < a) {
 
         this.animateTop = false;
 
@@ -39,7 +39,8 @@ export default {
 
       }
 
-      this.isActiveNumber = i;
+      this.isActiveNumber = value.index;
+      
 
     }
   }
@@ -48,10 +49,8 @@ export default {
 
 <style lang="scss">
 .container {
-  box-sizing: border-box;
   display: flex;
-  height: 100%;
-  opacity: 1;
+
 
   @media (max-width: 768px) {
     display: block;
